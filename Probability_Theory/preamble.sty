@@ -1,0 +1,95 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{preamble}[2025/06/29 Preamble]
+
+
+\RequirePackage[no-math]{fontspec} 	
+\RequirePackage[russian]{babel}
+\RequirePackage{microtype}
+\usepackage{amsmath,amssymb,amsthm}
+
+% Основные настройки шрифтов
+\setmainfont{STIX Two Text}
+\let\arrowvert\undefined
+\RequirePackage[stix2]{newtxmath}
+\let\openbox\undefined
+\DeclareSymbolFont{operators}{OT1}{stix2}{m}{n}
+\SetSymbolFont{operators}{bold}{OT1}{stix2}{b}{n}
+
+% Настройки математических шрифтов
+\SetMathAlphabet{\mathcal}{normal}{OMS}{cmsy}{m}{n} % Для каллиграфических символов
+
+
+
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{titling}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{multicol}
+\usepackage{wrapfig}
+
+
+\geometry{
+    left=25mm,
+    right=25mm,
+    top=20mm,
+    bottom=20mm
+}
+
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{lemma}{Лемма}[section]
+\newtheorem{corollary}{Следствие}[section]
+\newtheorem*{corollary*}{Следствие}
+\newtheorem{statement}{Утверждение}[section]
+
+
+\newtheoremstyle{solutionstyle} % Имя стиля
+  {10pt}   % Отступ сверху
+  {10pt}   % Отступ снизу
+  {} % Стиль шрифта внутри блока (например, наклонный)
+  {15pt}   % Отступ от левого края
+  {} % Стиль заголовка (жирный)
+  {:}      % Разделитель после заголовка
+  {0.5em}  % Расстояние между заголовком и текстом
+  {} % Заголовок решения
+
+% Применяем этот стиль к новому окружению
+\theoremstyle{solutionstyle}
+\newtheorem*{solution}{Решение}
+
+\theoremstyle{plain}
+\newtheorem{example}{Пример}[section]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Определение}[section]
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Замечание}
+\newtheorem*{remind}{Напоминание}
+
+\renewcommand{\proofname}{Доказательство}%
+\renewcommand\qedsymbol{$\blacksquare$}
+
+% Увеличиваем толщину рамки (по умолчанию 0.4pt)
+\setlength{\fboxrule}{1.5pt} % Можно регулировать (1pt, 2pt и т. д.)
+% Настройка стиля секции с увеличенным шрифтом для номера
+\titleformat{\section}[block]
+  {\Large\bfseries} % Формат текста заголовка
+  {\llap{\framebox[1.2em]{\Large\bfseries\thesection}\hspace{-1.25em}}} % Формат номера (в рамке)
+  {35pt} % Расстояние между номером и текстом
+  {} % Код перед текстом заголовка
+
+  
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!66!black,
+    citecolor=red!66!black,
+    urlcolor=green!33!black,
+    pdftitle={Алгебра - 4 семестр}
+}
+
+
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Wedge}{\bigwedge\nolimits}

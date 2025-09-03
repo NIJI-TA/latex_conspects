@@ -1,0 +1,20 @@
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.nav
+*.snm
+*.vrb
+*.lof
+*.lot
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+# VS Code settings (если не хотите делиться)
+.vscode/
+# MacOS system files
+.DS_Store
