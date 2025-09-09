@@ -53,6 +53,10 @@
     Событие нулевой вероятности называется \textit{невозможным}.
 \end{definition}
 
+\begin{example}
+    Если мы бросаем шарик в квадратную область, то вероятность попасть в какую-то конкретную точку равна нулю, потому что мера Лебега точки равна нулю.
+\end{example}
+
 \begin{definition}
     \textit{Геометрическая вероятность} — модель, где вероятностное пространство $\Omega$ является измеримым подмножеством $\mathbb{R}^n$ с мерой Лебега $\operatorname{mes}$, причём $0 < \operatorname{mes}(\Omega) < \infty$. Вероятность определяется как нормированная мера Лебега: $$\mathbb{P}(A) = \frac{\operatorname{mes}A}{\operatorname{mes}\Omega}, \qquad A \subset \Omega, \; A \in \mathcal{B}.$$ В этом случае часто рассматривают борелевскую $\sigma$-алгебру $\mathcal{B}$ (наименьшау $\sigma$-алгебру, которая содержит все открытые множества $\Omega$). 
 \end{definition}
@@ -90,6 +94,9 @@
 
 \section{Лекция 09.09.25}
 
-hello
+Формулу для условной вероятности можно переписать в виде: \[ \mathbb{P} \left( A \cap B\right) = \mathbb{P} \left( A \mid B\right) \cdot \mathbb{P} \left( B\right) = \mathbb{P} \left( B \mid A\right) \cdot \mathbb{P} \left( A\right);\]
+Используя это же можно по индукции доказать, что: \[ \mathbb{P} \left( A_1 \cap A_2 \cap \dots \cap A_n \right) = \mathbb{P} \left( A_1 \right) \cdot \mathbb{P} \left( A_2 \mid A_1 \right) \cdot \mathbb{P} \left( A_3 \mid A_1 \cap A_2 \right) \cdot \ldots \cdot \mathbb{P}\left(A_n \mid A_1 \cap \dots \cap A_{n-1}\right);\]
+
+
 
 \end{document}
