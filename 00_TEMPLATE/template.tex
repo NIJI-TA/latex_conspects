@@ -1,0 +1,118 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{preamble}
+
+\hypersetup{pdftitle={Шаблон конспекта}}
+
+\begin{document}
+\input{title}
+
+\section{Занятие}
+
+Краткий пример того, как набирать конспект: определения и теоремы ---
+обычным \texttt{amsthm}, обычное замечание --- жирным заголовком,
+напоминание и отступление --- с чёрной полоской слева.
+Формулы нумеруются внутри секции.
+
+\dfn{Гладкая функция}{
+Пусть \(\Omega\subset\R^n\) --- область. Говорят, что
+\(u\in C^\infty(\Omega)\), если все частные производные \(u\)
+существуют и непрерывны на \(\Omega\).
+}
+
+\thm{Формула Ньютона--Лейбница}{
+Если \(f\in C^1[a,b]\), то
+\begin{equation}
+    \label{eq:newton-leibniz}
+    \int_a^b f'(x)\,dx = f(b)-f(a).
+\end{equation}
+}
+
+\prf{
+Достаточно рассмотреть первообразную \(F(x)=f(x)\) и воспользоваться
+определением определённого интеграла.
+}
+
+Формулу Ньютона--Лейбница см.~\eqref{eq:newton-leibniz}.
+
+\lem{Оценка}{
+Для любых \(x,y\in\R\) выполнено \(\abs{x+y}\le\abs{x}+\abs{y}\).
+}
+
+\stat{Следствие треугольника}{
+\(\abs{\abs{x}-\abs{y}}\le\abs{x-y}\).
+}
+
+\coroll{}{
+Неравенство треугольника сохраняется при любом конечном числе слагаемых.
+}
+
+\subsection{Вычисления}
+
+Разложение можно писать в \texttt{align} --- номер ставится автоматически:
+\begin{align}
+    (x+y)^3
+    &= (x+y)^2(x+y) \\
+    &= (x^2+2xy+y^2)(x+y) \\
+    &= x^3+3x^2y+3xy^2+y^3.
+\end{align}
+
+\ex{Производная степени}{
+\(\dfrac{d}{dx}x^n = n x^{n-1}\) при \(n\in\N\).
+}
+
+\exr{Дифференцирование произведения}{
+Найдите \(\dfrac{d}{dx}(x\sin x)\).
+}
+
+\rem{Напоминание}{
+Непрерывность в \(\mathcal{D}(\Omega)\) равносильна секвенциальной
+непрерывности: достаточно проверять пределы последовательностей.
+}
+
+\note{Обычное замечание --- только жирный заголовок, без вертикальной полоски.}
+
+\section{Графики и диаграммы}
+
+Простой график через \texttt{pgfplots}:
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.72\textwidth,
+    height=5.4cm,
+    axis lines=middle,
+    xlabel=\(x\),
+    ylabel=\(y\),
+    xtick={-1,1},
+    ytick={-1,1},
+    xmin=-2.2, xmax=2.2,
+    ymin=-1.4, ymax=1.4,
+    every axis plot/.append style={thick, black},
+    tick label style={font=\small},
+    label style={font=\small},
+]
+\addplot[domain=-2:2, samples=120] {sin(deg(x))};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+Коммутативная диаграмма через \texttt{tikz-cd}:
+\begin{center}
+\begin{tikzcd}
+    A \arrow[r, "f"] \arrow[d, "h"']
+        & B \arrow[d, "g"] \\
+    C \arrow[r, "k"']
+        & D
+\end{tikzcd}
+\end{center}
+
+Набросок в чистом \texttt{tikz}:
+\begin{center}
+\begin{tikzpicture}[x=1.1cm, y=1.1cm]
+    \draw[-{Stealth}, gray!65] (-0.2,0) -- (3.6,0) node[right] {\(x\)};
+    \draw[-{Stealth}, gray!65] (0,-0.2) -- (0,2.3) node[above] {\(y\)};
+    \draw[thick] (0.2,0.35) -- (1.4,1.55) -- (3.1,0.7);
+    \fill (1.4,1.55) circle (1.5pt);
+\end{tikzpicture}
+\end{center}
+
+\end{document}

@@ -5,6 +5,7 @@
 *.synctex.gz
 *.fls
 *.fdb_latexmk
+*.xdv
 *.nav
 *.snm
 *.vrb
@@ -14,7 +15,9 @@
 *.blg
 *.bcf
 *.run.xml
-# VS Code settings (если не хотите делиться)
 .vscode/
-# MacOS system files
+.vscode/.history/
+.vscode/*.log
+.history/
+
 .DS_Store

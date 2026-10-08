@@ -1,6 +1,8 @@
+% !TEX root = Probability.tex
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{preamble}[2025/06/29 Preamble]
 
+\RequirePackage{fix-cm}
 
 \RequirePackage[no-math]{fontspec} 	
 \RequirePackage[russian]{babel}
@@ -8,7 +10,13 @@
 \usepackage{amsmath,amssymb,amsthm}
 
 % Основные настройки шрифтов
-\setmainfont{STIX Two Text}
+\setmainfont{STIXTwoText}[
+  Extension = .otf,
+  UprightFont = *-Regular,
+  BoldFont = *-Bold,
+  ItalicFont = *-Italic,
+  BoldItalicFont = *-BoldItalic
+]
 \let\arrowvert\undefined
 \RequirePackage[stix2]{newtxmath}
 \let\openbox\undefined
@@ -22,13 +30,10 @@
 
 \usepackage{geometry}
 \usepackage{hyperref}
-\usepackage{titling}
 \usepackage{tikz}
 \usepackage{tikz-cd}
 \usepackage{indentfirst}
 \usepackage{titlesec}
-\usepackage{multicol}
-\usepackage{wrapfig}
 
 
 \geometry{
@@ -37,6 +42,10 @@
     top=20mm,
     bottom=20mm
 }
+
+\emergencystretch=2em
+\hfuzz=3pt
+\raggedbottom
 
 \newtheorem{theorem}{Теорема}[section]
 \newtheorem{lemma}{Лемма}[section]
@@ -90,6 +99,3 @@
     pdftitle={Алгебра - 4 семестр}
 }
 
-
-\DeclareMathOperator{\Ker}{Ker}
-\DeclareMathOperator{\Wedge}{\bigwedge\nolimits}

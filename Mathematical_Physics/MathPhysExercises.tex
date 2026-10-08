@@ -1,0 +1,506 @@
+% !TEX root = MathPhysExercises.tex
+\documentclass[12pt,a4paper]{article}
+\usepackage{preamble}
+
+\renewcommand{\notesuniversity}{Санкт-Петербургский государственный университет}
+\renewcommand{\notesfaculty}{Факультет математики и механики}
+\renewcommand{\notestitle}{Математическая физика}
+\renewcommand{\notessubtitle}{Упражнения}
+\renewcommand{\notesauthor}{}
+\renewcommand{\notesdate}{}
+\renewcommand{\notesheader}{Математическая физика \(\cdot\) Упражнения}
+
+\hypersetup{pdftitle={Математическая физика — Упражнения}}
+
+\theoremstyle{definition}
+\newtheorem{notesexercise}{Упражнение}[section]
+\makeatletter
+\renewcommand{\exr}[2]{\notes@wrap{notesexercise}{#1}{#2}}
+\makeatother
+
+\begin{document}
+\notesmaketitle
+
+\tableofcontents
+
+\newpage
+
+% =====================================================================
+\section{Практика 1}
+\renewcommand{\notesheader}{Математическая физика \(\cdot\) Практика 1 \(\cdot\) Упражнения}
+% =====================================================================
+
+\exr{}{
+Пусть \(X\), \(Y\) --- топологические векторные пространства,
+\(X \hookrightarrow Y\), где \(\hookrightarrow\) такое, что
+\(\exists A \colon X \to Y\), где \(A\) линейно, непрерывно и инъективно,
+при этом \(X\) всюду плотно в \(Y\). Тогда \(Y^* \hookrightarrow X^*\).
+}
+
+\rem{Контекст}{
+Сходимость в \(\DD(\Omega)\):
+\(\phi_k \to \phi\) тогда и только тогда, когда
+\begin{enumerate}[leftmargin=1.6em,itemsep=3pt]
+    \item \(\forall \alpha\ \ D^\alpha \phi_k \rightrightarrows D^\alpha \phi\);
+    \item \(\exists K\) --- компакт: \(\forall k\ \supp \phi_k \subset K \subset \Omega\).
+\end{enumerate}
+}
+
+\exr{}{
+Привести 2 топологических пространства с одинаковой сходимостью
+(Богачев В.\,И., ``Основы теории мер'', Том~2, стр.~70).
+}
+
+\exr{}{
+Показать, что такая сходимость не может быть порождена метрикой.
+}
+
+\rem{Контекст}{
+Локально конечный борелевский заряд \(\mu \in \mathcal{M}_{\loc}(\Omega)\)
+сопоставляют функционалу
+\[
+\langle \widetilde{\mu},\, \phi \rangle
+:=
+\int_\Omega \phi\,d\mu.
+\]
+}
+
+\exr{}{
+\(\widetilde{\mu} \in \DD'(\Omega)\) и
+\(\mathcal{M}_{\loc}(\Omega) \to \DD'(\Omega):\ \mu \mapsto \widetilde{\mu}\).
+\[
+\langle \mu,\, \phi \rangle
+=
+\int_\Omega \phi\,d\mu.
+\]
+}
+
+\rem{Контекст}{
+Регулярная обобщённая функция --- это функционал \(\widetilde{f}\),
+отвечающий \(f \in L_1^{\loc}(\Omega)\):
+\[
+\langle \widetilde{f},\, \phi \rangle
+=
+\int_\Omega f\,\phi.
+\]
+Дельта-функция задаётся формулой \(\langle \delta,\, \phi \rangle = \phi(0)\).
+}
+
+\exr{}{\(\delta\) --- не регулярная функция.}
+
+\rem{Контекст}{
+\(\supp f\) --- наименьшее замкнутое множество, вне которого \(f = 0\).
+Равенство \(f = 0\) на открытом \(\Omega' \subset \Omega\) означает, что
+\(\langle f,\, \phi \rangle = 0\) для всех \(\phi \in \DD(\Omega)\)
+с \(\supp\phi \subset \Omega'\).
+}
+
+\exr{}{
+Если \(f\) --- заряд или регулярная функция, то \(\supp f\) в этом смысле
+совпадает с \(\supp f\) в стандартном смысле.
+}
+
+\exr{}{
+\(\eta \in C^\infty(\Omega)\) и \(\eta \equiv 1\) на \(\supp f\),
+\(f \in \DD(\Omega)\). Тогда \(\eta f = f\).
+}
+
+\rem{Контекст}{
+Замена переменных вдоль диффеоморфизма \(\Phi \colon \Omega \to \Omega_1\):
+\[
+\langle f \circ \Phi,\, \phi \rangle
+:=
+\biggl\langle
+    f,\,
+    \frac{\phi \circ \Phi^{-1}}{|\det \Phi'|}
+\biggr\rangle.
+\]
+Умножение на \(a \in C^\infty\):
+\(\langle af,\, \phi \rangle = \langle f,\, a\phi \rangle\).
+}
+
+\exr{}{
+\(a \in C^\infty(\Omega)\), \(f \in \DD'(\Omega)\),
+\(\Phi\) --- диффеоморфизм \(\Omega \to \Omega_1\). Тогда
+\[
+(af)\bigl(\phi(x)\bigr)
+=
+a\bigl(\phi(x)\bigr)\,f\bigl(\phi(x)\bigr).
+\]
+}
+
+\rem{Контекст}{
+Обобщённая производная:
+\[
+\langle D^\alpha f,\, \phi \rangle
+=
+(-1)^{|\alpha|}\,
+\langle f,\, D^\alpha\phi \rangle.
+\]
+}
+
+\exr{}{
+\(D^\alpha D^\beta f = D^\beta D^\alpha f = D^{\alpha+\beta} f\).
+}
+
+\exr{}{
+Правило Лейбница
+\(D_i(a \cdot f) = D_i a \cdot f + a D_i f\).
+}
+
+\rem{Контекст}{
+\(\operatorname{sing\,supp} f\) --- наименьшее замкнутое множество,
+вне которого \(f\) совпадает с какой-то \(C^\infty\)-функцией.
+Носитель \(\supp f\) --- как выше: наименьшее замкнутое множество,
+вне которого \(f = 0\).
+}
+
+\exr{}{
+\(\supp D^\alpha f \subset \supp f\) и привести пример, когда нет равенства.
+}
+
+\exr{}{
+\(\operatorname{sing\,supp} D^\alpha f \subset \operatorname{sing\,supp} f\)
+и привести пример, когда нет равенства.
+}
+
+\newpage
+% =====================================================================
+\section{Практика 2}
+\renewcommand{\notesheader}{Математическая физика \(\cdot\) Практика 2 \(\cdot\) Упражнения}
+% =====================================================================
+
+\rem{Контекст}{
+Функция Хевисайда \(\Theta(x) = \chi_{[0,+\infty)}(x)\)
+удовлетворяет \(\Theta' = \delta\) в \(\DD'(\R)\).
+}
+
+\exr{Кусочно-гладкая функция}{
+Пусть \(f\) --- кусочно-гладкая функция на \(\R\).
+Найти \(f' \in \DD'(\R)\).
+\par\smallskip
+\noindent\textit{Подсказка:} понадобится функция Хевисайда.
+\par\medskip
+\centering
+\begin{tikzpicture}[x=0.72cm, y=0.52cm, baseline=(current bounding box.center)]
+  \draw[-{Stealth}, gray!70] (-2.6,0) -- (3.4,0);
+  \draw[-{Stealth}, gray!70] (0,-0.35) -- (0,2.1);
+  \draw[black, thick] (-2.3,0.35) -- (-0.15,1.05);
+  \draw[black, thick] (0.15,1.55) -- (3.1,0.55);
+  \fill[black] (-0.15,1.05) circle (1.6pt);
+  \fill[black] (0.15,1.55) circle (1.6pt);
+  \draw[black, densely dashed] (-0.15,1.05) -- (0.15,1.05);
+\end{tikzpicture}\par
+}
+
+\rem{Контекст}{
+\(\widetilde{f}\) --- регулярная обобщённая функция, отвечающая
+\(f \in L_1^{\loc}\). Сдвиг понимается как замена переменных,
+производная --- как выше. В частности,
+\[
+\delta'(x)
+=
+\lim_{h \to 0}
+\frac{\delta(x+h) - \delta(x)}{h}.
+\]
+}
+
+\exr{Разностная производная}{
+Показать, что
+\[
+\widetilde{f}'_{x_i}
+=
+\lim_{h \to 0}
+\frac{\widetilde{f}(x + h e_i) - \widetilde{f}(x)}{h}.
+\]
+}
+
+\rem{Контекст}{
+Коммутативное ассоциативное произведение обобщённых функций,
+согласованное с умножением на \(C^\infty\), невозможно.
+Поскольку \(x\,\delta(x) = 0\),
+\[
+\bigl(\delta(x) \cdot x\bigr)\, \Pvf\frac{1}{x} = 0,
+\]
+а из тождества \(x\, \Pvf\frac{1}{x} = 1\) следует
+\[
+\delta(x) \cdot \Bigl(x\, \Pvf\frac{1}{x}\Bigr) = \delta(x).
+\]
+}
+
+\exr{Дизъюнктные носители}{
+Если \(\supp f \cap \supp g = \varnothing\), то такое произведение
+определить можно.
+}
+
+\newpage
+% =====================================================================
+\section{Практика 3}
+\renewcommand{\notesheader}{Математическая физика \(\cdot\) Практика 3 \(\cdot\) Упражнения}
+% =====================================================================
+
+\rem{Контекст}{
+Прямое произведение \(f(x)g(y)\) коммутативно на разложимых
+пробных функциях \(\phi(x)\psi(y)\), а значит и на их линейных
+комбинациях. Дальше доказывается, что такие линейные комбинации
+плотны в \(\DD(\Omega_1 \times \Omega_2)\). В конспекте это
+рассуждение записано при \(\dim \Omega_1 = \dim \Omega_2 = 1\).
+}
+
+\exr{}{Доказать для общего случая.}
+
+\rem{Контекст}{
+Сходимость в \(\DD'(\Omega)\):
+\(f_k \to f\), если
+\(\langle f_k,\, \phi \rangle \to \langle f,\, \phi \rangle\)
+для всякой \(\phi \in \DD(\Omega)\).
+Пределы ниже понимаются в этой сходимости.
+}
+
+\exr{}{
+\(\omega_\epsilon\) --- аппроксимативная единица.
+\(\displaystyle\lim_{\epsilon \to 0} \omega_\epsilon\)
+(ответ: \(\delta\)-функция).
+}
+
+\exr{}{
+\(\displaystyle\lim_{h \to 0} \frac{f(x+h) - f(x)}{h} = ?\)
+(дома).
+}
+
+\exr{}{
+\(\displaystyle\lim_{\epsilon \to 0} \frac{1}{x + i\epsilon} = ?\)
+в \(\DD'(\R)\)
+(решили на паре).
+}
+
+\rem{Контекст}{
+В \(\DD'(\R)\)
+\[
+\frac{1}{x + i\epsilon}
+\longrightarrow
+\Pvf\frac{1}{x} - i\pi\delta.
+\]
+}
+
+\exr{}{Доказать это для \(\dfrac{1}{x - i\epsilon}\).}
+
+\rem{Контекст}{
+\(\Pvf\) --- главное значение: для сингулярного ядра
+\[
+\Bigl\langle
+    \Pvf \frac{A\bigl(\tfrac{x}{|x|}\bigr)}{|x|^n},\,
+    \phi
+\Bigr\rangle
+=
+\vp \int_{\R^n}
+    \frac{A\bigl(\tfrac{x}{|x|}\bigr)}{|x|^n}\,
+    \phi(x)\,dx,
+\]
+где интеграл в смысле главного значения --- предел интегралов
+по дополнению шара \(B_\epsilon\). Пределы ниже --- в \(\DD'(\R)\).
+}
+
+\exr{}{
+\[
+\lim_{n \to \infty}
+\Pvf\frac{\cos nx}{x}
+= ?,
+\]
+\[
+\lim_{n \to \infty}
+\Pvf\frac{\sin nx}{x}
+= ?.
+\]
+}
+
+\newpage
+% =====================================================================
+\section{Практика 4}
+\renewcommand{\notesheader}{Математическая физика \(\cdot\) Практика 4 \(\cdot\) Упражнения}
+% =====================================================================
+
+\rem{Контекст}{
+Свёртка \(f, g \in \DD'(\R^n)\), если предел существует и не зависит
+от финитизатора \(\{\eta_k\}\) (\(\eta_k \to 1\): на каждом компакте
+\(\eta_k\) с какого-то момента тождественно равна \(1\), и
+\(|D^\alpha \eta_k| \le C_\alpha\)):
+\[
+\langle f * g,\, \phi \rangle
+:=
+\lim_k
+\langle f(x)\, g(y),\, \eta_k(x,y)\, \phi(x+y) \rangle.
+\]
+Сдвиг обобщённой функции --- замена переменных \(x \mapsto x + h\).
+}
+
+\rem{Контекст}{
+Если свёртка существует, то
+\[
+D^\alpha(f * g) = (D^\alpha f) * g = f * (D^\alpha g),
+\]
+и эти свёртки существуют и равны.
+}
+
+\exr{}{
+Привести пример, когда \(\exists\, D_i f * g\), \(\exists\, f * D_i g\),
+но они не равны.
+}
+
+\exr{}{
+\(f(x) * g(x+h) = (f * g)(x+h)\) --- оператор свёртки коммутирует
+с оператором сдвига.
+}
+
+\rem{Контекст}{
+Доказано включение
+\(\supp(f * g) \subset \overline{\supp f + \supp g}\).
+Без замыкания сумма \(\supp f + \supp g\) не обязательно замкнута.
+}
+
+\exr{}{
+\(\bigl(\overline{\supp f + \supp g}\bigr)^c\) не обязательно открыто.
+}
+
+\exr{}{
+Пример \(f\) и \(g\):
+\(\supp(f * g) \subset \overline{\supp f + \supp g}\).
+}
+
+\exr{}{
+Пример того, что:
+1)~$*$ не ассоциативна;
+2)~$*$ не непрерывна.
+}
+
+\rem{Контекст}{
+Если \(f, g \in \DD'(\R^n)\) и \(\supp g\) --- компакт, то свёртка
+\(f * g\) существует.
+}
+
+\exr{}{
+Если \(\supp g\) компакт, то \(f * g\) непрерывна по \(f\).
+Если \(g_k \to g\) и \(\supp g_k \subset K\) --- компакт, то \(f * g_k \to f * g\).
+}
+
+\rem{Контекст}{
+\(C \subset \R^n\) --- конус (\(\forall t > 0\ \ tC \subset C\)), причём
+\begin{enumerate}[leftmargin=1.6em,itemsep=3pt]
+    \item \(C\) выпуклый;
+    \item \(C\) замкнутый;
+    \item \(C\) открытый, \(\operatorname{Int} C^* \ne \varnothing\),
+\end{enumerate}
+где \(C^* = \{x \in \R^n \mid (x,y) \ge 0\ \forall y \in C\}\).
+Для выпуклых конусов условие~3 равносильно тому, что \(C\) не содержит прямых.
+
+Если \(\supp f \subset C\) и \(\supp g \subset C\), то свёртка \(f * g\)
+существует и \(\supp(f * g) \subset C\).
+В доказательстве берут \(\eta \equiv 1\) на \(C + B_\epsilon(0)\)
+и \(\eta = 0\) вне \(C + B_{2\epsilon}(0)\), и проверяют финитность
+\(\eta(x)\eta(y)\, \phi(x+y)\).
+От противного найдётся \((x_k, y_k) \to \infty\) с
+\[
+\eta(x_k)\, \eta(y_k)\, \phi(x_k + y_k) \ne 0,
+\]
+так что \(x_k, y_k \in C + B_{2\epsilon}\), \(|x_k + y_k| \le A\),
+\(\dfrac{|x_k|}{|y_k|} \to 1\) и
+\[
+\frac{x_k}{|x_k|} \to \hat x \in S_1,
+\qquad
+\frac{y_k}{|y_k|} \to \hat y \in S_1.
+\]
+Из \(x_k \in C + B_{2\epsilon}\) следует \(\hat x \in C\).
+}
+
+\exr{}{\(\hat y \in C\).}
+
+% =====================================================================
+\section{Практика 5}
+\renewcommand{\notesheader}{Математическая физика \(\cdot\) Практика 5 \(\cdot\) Упражнения}
+% =====================================================================
+
+\rem{Контекст}{
+Включение
+\(\operatorname{singsupp}(f * g)
+\subset
+\operatorname{singsupp} f + \operatorname{singsupp} g\)
+неверно для свёртки в смысле Владимирова: \(f * g\) существует, если
+существует
+\[
+\lim \langle f(x)\, g(y),\, \eta_k(x,y)\, \phi(x+y) \rangle
+\]
+и предел не зависит от финитизатора \(\{\eta_k\}\).
+
+По Хёрмандеру \(f * g\) существует, если для всякого компакта
+\(K \subset \R^n\) множество
+\[
+S_K
+=
+\bigl\{
+    (x,y) \in \supp f \times \supp g
+    \bigm|
+    x + y \in K
+\bigr\}
+\]
+ограничено (значит, компактно).
+}
+
+\exr{}{
+\(\operatorname{singsupp}(f * g)
+\subset
+\overline{\operatorname{singsupp} f + \operatorname{singsupp} g}\)
+для Хёрмандера.
+}
+
+\rem{Контекст}{
+Для дифференциального оператора \(L = P(D)\) с постоянными
+коэффициентами фундаментальное решение \(\mathcal{E}\) --- это решение
+\(L\mathcal{E} = \delta\). Тогда \(u_f = \mathcal{E} * f\) решает \(Lu = f\),
+если свёртка существует.
+
+Для обыкновенного оператора
+\(\sum_{k=0}^{n} C_k u^{(k)} = f\) фундаментальное решение удовлетворяет
+\(\sum_{k=0}^{n} C_k u_{\text{фунд.}}^{(k)} = \delta\),
+а общее решение равно \(u_{\text{фунд.}} * f\).
+С этой конструкцией связана следующая задача Коши.
+}
+
+\exr{}{
+\[
+\begin{cases}
+\sum C_k u^{(k)} = 0, \\
+u^{(k)} = 0 \quad \forall k < n-1, \\
+u^{(n-1)} = 1.
+\end{cases}
+\]
+}
+
+\rem{Контекст}{
+Исходная задача Коши:
+\[
+\begin{cases}
+u_{tt} - a^2 \Delta u = f(x,t), & t > 0, \\
+u\big|_{t=0} = \phi, \\
+u_t\big|_{t=0} = \psi,
+\end{cases}
+\qquad
+u \in C^2\bigl(\R^n \times \R_{\ge 0}\bigr).
+\]
+Продолжение \(U\) равно \(u\) при \(t \ge 0\) и нулю при \(t < 0\);
+аналогично \(F\) равно \(f\) при \(t \ge 0\) и нулю при \(t < 0\).
+
+Верхнее (обобщённое) уравнение:
+\[
+U_{tt} - a^2 \Delta U
+=
+F(x,t) + \phi(x)\, \delta'(t) + \psi(x)\, \delta(t).
+\]
+}
+
+\exr{}{
+Если \(U\) --- решение верхнего уравнения и
+\(U \in C^2\bigl(\R^n \times \R_{\ge 0}\bigr)\),
+тогда \(u = U\big|_{\{t \ge 0\}}\) --- решение исходного.
+}
+
+\end{document}

@@ -1,0 +1,245 @@
+% !TEX root = template.tex
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{preamble}[2026/09/12 Minimal notes]
+
+\RequirePackage{fix-cm}
+
+% ---------------------------------------------------------------------
+% Шрифты: как в Probability_Theory
+% ---------------------------------------------------------------------
+\RequirePackage[no-math]{fontspec}
+\RequirePackage[russian]{babel}
+\RequirePackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+
+\setmainfont{STIXTwoText}[
+  Extension = .otf,
+  UprightFont = *-Regular,
+  BoldFont = *-Bold,
+  ItalicFont = *-Italic,
+  BoldItalicFont = *-BoldItalic
+]
+\setsansfont{STIXTwoText}[
+  Extension = .otf,
+  UprightFont = *-Regular,
+  BoldFont = *-Bold,
+  ItalicFont = *-Italic,
+  BoldItalicFont = *-BoldItalic
+]
+\let\arrowvert\undefined
+\RequirePackage[stix2]{newtxmath}
+\let\openbox\undefined
+\DeclareSymbolFont{operators}{OT1}{stix2}{m}{n}
+\SetSymbolFont{operators}{bold}{OT1}{stix2}{b}{n}
+\SetMathAlphabet{\mathcal}{normal}{OMS}{cmsy}{m}{n}
+
+% ---------------------------------------------------------------------
+% Страница, графика, диаграммы
+% ---------------------------------------------------------------------
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{pgfplots}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage[most,breakable]{tcolorbox}
+\usepackage{hyperref}
+
+\usetikzlibrary{arrows.meta,calc,positioning,cd,babel}
+\pgfplotsset{compat=1.18}
+\captionsetup{hypcap=false, font=small, labelfont=bf}
+\graphicspath{{images/}}
+
+\geometry{
+    left=22mm,
+    right=22mm,
+    top=20mm,
+    bottom=16mm,
+    headheight=15pt,
+    headsep=8pt
+}
+
+\emergencystretch=2em
+\hfuzz=3pt
+\raggedbottom
+
+\numberwithin{equation}{section}
+\allowdisplaybreaks
+
+% ---------------------------------------------------------------------
+% Метаданные шапки --- переопределите в title.tex
+% ---------------------------------------------------------------------
+\newcommand{\notesuniversity}{Санкт-Петербургский государственный университет}
+\newcommand{\notesfaculty}{Факультет математики и механики}
+\newcommand{\notestitle}{Название конспекта}
+\newcommand{\notessubtitle}{}
+\newcommand{\notesauthor}{}
+\newcommand{\notesdate}{}
+\newcommand{\notesheader}{\notestitle}
+
+\newcommand{\notesmaketitle}{%
+    \thispagestyle{plain}%
+    \begin{center}
+        {\small\scshape\notesuniversity\par}
+        \vspace{0.35em}
+        {\small\notesfaculty\par}
+        \vspace{1.15em}
+        \hrule height 0.85pt
+        \vspace{1.2em}
+        {\LARGE\bfseries\notestitle\par}
+        \ifx\notessubtitle\empty\else
+            \vspace{0.4em}{\large\notessubtitle\par}%
+        \fi
+        \ifx\notesauthor\empty\else
+            \vspace{0.85em}{\normalsize\notesauthor\par}%
+        \fi
+        \vspace{1.2em}
+        \hrule height 0.85pt
+        \vspace{0.9em}
+        \ifx\notesdate\empty\else
+            {\normalsize\notesdate\par}%
+        \fi
+    \end{center}
+    \vspace{1.35em}%
+}
+
+% ---------------------------------------------------------------------
+% Колонтитулы и секции
+% ---------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\scshape\notesheader}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot{}
+\fancypagestyle{plain}{%
+    \fancyhf{}%
+    \fancyhead[R]{\small\thepage}%
+    \renewcommand{\headrulewidth}{0pt}%
+}
+
+\titleformat{\section}
+    {\Large\bfseries}
+    {}
+    {0pt}
+    {}
+\titlespacing*{\section}{0pt}{1.6em}{0.7em}
+
+\titleformat{\subsection}
+    {\large\bfseries}
+    {\thesubsection}
+    {0.7em}
+    {}
+\titlespacing*{\subsection}{0pt}{1.25em}{0.45em}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=black
+}
+
+% ---------------------------------------------------------------------
+% Окружения: amsthm + те же короткие макросы, что в старом шаблоне
+% ---------------------------------------------------------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{lemma}{Лемма}[section]
+\newtheorem{corollary}{Следствие}[section]
+\newtheorem{statement}{Утверждение}[section]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Определение}[section]
+\newtheorem{example}{Пример}[section]
+\newtheorem{exercise}{Упражнение}[section]
+
+\renewcommand{\proofname}{Доказательство}
+\renewcommand{\qedsymbol}{\(\square\)}
+
+\newcommand{\notes@wrap}[3]{%
+    \if\relax\detokenize{#2}\relax
+        \begin{#1}#3\end{#1}%
+    \else
+        \begin{#1}[#2]#3\end{#1}%
+    \fi
+}
+
+\newcommand{\thm}[2]{\notes@wrap{theorem}{#1}{#2}}
+\newcommand{\lem}[2]{\notes@wrap{lemma}{#1}{#2}}
+\newcommand{\coroll}[2]{\notes@wrap{corollary}{#1}{#2}}
+\newcommand{\stat}[2]{\notes@wrap{statement}{#1}{#2}}
+\newcommand{\dfn}[2]{\notes@wrap{definition}{#1}{#2}}
+\newcommand{\ex}[2]{\notes@wrap{example}{#1}{#2}}
+\newcommand{\exr}[2]{\notes@wrap{exercise}{#1}{#2}}
+\newcommand{\prf}[1]{\begin{proof}#1\end{proof}}
+
+% Замечания: обычные --- жирный заголовок;
+% Напоминание / Отступление --- тонкая чёрная полоска слева
+\newtcolorbox{notebox}{%
+    enhanced,
+    breakable,
+    frame hidden,
+    boxrule=0pt,
+    colback=white,
+    borderline west={1.7pt}{0pt}{black},
+    sharp corners,
+    left=11pt,
+    right=4pt,
+    top=5pt,
+    bottom=5pt,
+    before skip=10pt,
+    after skip=10pt,
+}
+
+\newcommand{\notes@remarktitle}[1]{%
+    \if\relax\detokenize{#1}\relax
+        \textbf{Замечание.}\ %
+    \else
+        \textbf{#1.}\ %
+    \fi
+}
+
+\newcommand{\notes@remarkplain}[2]{%
+    \par\vspace{10pt}%
+    \noindent\notes@remarktitle{#1}#2\par
+    \vspace{10pt}%
+}
+
+\newcommand{\notes@remarkboxed}[2]{%
+    \begin{notebox}\notes@remarktitle{#1}#2\end{notebox}%
+}
+
+\ExplSyntaxOn
+\newcommand{\notes@ifsidebar}[3]{%
+    \bool_if:nTF
+      {
+        \str_if_eq_p:ee { \tl_trim_spaces:n {#1} } {Напоминание}
+        ||
+        \str_if_eq_p:ee { \tl_trim_spaces:n {#1} } {Отступление}
+      }
+      {#2} {#3}
+}
+\ExplSyntaxOff
+
+\newcommand{\rem}[2]{%
+    \notes@ifsidebar{#1}
+        {\notes@remarkboxed{#1}{#2}}
+        {\notes@remarkplain{#1}{#2}}%
+}
+\newcommand{\note}[1]{\rem{}{#1}}
+
+% ---------------------------------------------------------------------
+% Частые математические макросы
+% ---------------------------------------------------------------------
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\sgn}{sgn}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\abs}[1]{\left|#1\right|}
