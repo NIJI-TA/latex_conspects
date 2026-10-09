@@ -420,32 +420,28 @@ $
 }
 
 \lem{}{
-Если \(f = 0\) на \(\Omega_\alpha\), то \(f = 0\) на
+Если \(f = 0\) на открытых множествах \(\Omega_\alpha\) для каждого $\alpha$, то \(f = 0\) и на их объединении
 \(\bigcup_\alpha \Omega_\alpha\).
 }
 
 \prf{
-\(\phi \in \DD\bigl(\bigcup_\alpha \Omega_\alpha\bigr)\),
-\(\langle f,\, \phi \rangle = 0\)?
-\[
-K = \supp\phi,
-\qquad
-K \subset \bigcup_\alpha \Omega_\alpha
-\]
-\[
-K \subset \bigcup_{i=1}^N \Omega_{\alpha_i}.
-\]
-\(\exists \{\eta_i\}_{i=1}^N\) --- разбиение единицы, т.е.
-\[
-\sum_{i=1}^N \eta_i = 1
-\quad\text{на }K
-\]
-\[
-\supp\eta_i \subset \Omega_{\alpha_i}.
-\]
-\begin{align*}
+Возьмем произвольную функцию \(\phi \in \DD\bigl(\bigcup_\alpha \Omega_\alpha\bigr)\), наша цель --- показать, что
+\(\langle f,\, \phi \rangle = 0\).
+
+Носитель функции 
+$K = \supp\phi$ по определению компакт, а так как $K \subset \bigcup_\alpha \Omega_\alpha$, то по лемме о конечном подпокрытии, можно выделить конечное подпокрытие: $$K \subset \bigcup_{i=1}^N \Omega_{\alpha_i}.$$
+Для этого конечного открытого покрытия существует гладкое разбиение единицы --- семейство функций
+$\{\eta_i\}_{i=1}^N$, таких что:
+\begin{enumerate}
+    \item $\sum_{i=1}^N \eta_i (x) = 1 \text{ для всех } x \in K$,
+    \item $\supp\eta_i \subset \Omega_{\alpha_i} \text{ для каждого } i = 1,\ldots,N$.
+\end{enumerate}
+
+Пользуясь линейностью функционала, распишем действие $f$ на $\phi$:
+
+$$
 \langle f,\, \phi \rangle
-&=
+=
 \Bigl\langle f,\, \Bigl(\sum_{i=1}^N \eta_i\Bigr)\phi \Bigr\rangle
 =
 \sum_{i=1}^N
@@ -456,24 +452,27 @@ K \subset \bigcup_{i=1}^N \Omega_{\alpha_i}.
   \bigr\rangle
 }^{=0}
 = 0.
-\end{align*}
+$$
 }
 
 \dfn{}{
-\(f = g\) на \(\Omega_1\), если \(f - g = 0\) на \(\Omega_1\).
+\(f = g\) на открытом \(\Omega_1\), если \(f - g = 0\) на \(\Omega_1\).
 }
 
 \dfn{}{
-\(\operatorname{sing\,supp} f\) --- наименьшее замкнутое множество,
-вне которого \(f\) совпадает с какой-то \(C^\infty\)-функцией.
+Сингулярным носителем обобщенной функции $f$ называется наименьшее замкнутое множество,
+вне которого \(f\) совпадает с какой-то \(C^\infty\)-функцией. Обозначается как \(\operatorname{sing\,supp} f\).
 }
 
 \ex{}{
+Для дельта-функции Дирака:
 \[
 \supp\delta = \{0\},
 \qquad
 \operatorname{sing\,supp}\delta = \{0\}.
 \]
+
+Для простого слоя на поверхности:
 \[
 \supp\delta_\Sigma
 =
@@ -484,7 +483,7 @@ K \subset \bigcup_{i=1}^N \Omega_{\alpha_i}.
 }
 
 \exr{}{
-Если \(f\) --- заряд или регулярная функция, то \(\supp f\) в этом смысле
+Показать, что если \(f\) --- заряд или регулярная функция, то \(\supp f\) в этом смысле
 совпадает с \(\supp f\) в стандартном смысле.
 }
 
