@@ -72,7 +72,8 @@ C_0(\Omega) & & \mathcal{M}(\Omega) \\
 }
 
 \exr{}{
-Показать, что такая сходимость не может быть порождена метрикой.
+Показать, что такая сходимость не может быть порождена метрикой.%
+\label{exr:d-not-metric}%
 }
 
 \remm{}{
@@ -3017,5 +3018,713 @@ u(x,t)
 u=\chi_{[-at,\, at]}(x)
 \]
 --- фундаментальное решение для волнового уравнения в \(\R^1\).
+
+
+\pagebreak
+\section{Практика 6}
+\renewcommand{\notesheader}{Математическая физика \(\cdot\) Практика 6 \(\cdot\) 09.10}
+
+% ---------------------------------------------------------------------
+\subsection{Упражнение \ref{exr:d-not-metric} (Гена)}
+\exr{}{
+Показать, что сходимость в \(\DD(\R)\) не может быть порождена метрикой.}
+
+Ниже доказательство упражнения \ref{exr:d-not-metric} от Гены для \(\Omega=\R\).
+
+\lem*{}{
+Пусть \(U\) --- окрестность нуля в \(\DD(\R)\).
+Тогда для всякого компакта \(K\subset\R\) найдётся
+\(\phi\in U\) с \(\supp\phi\not\subset K\).
+}
+
+\begin{center}
+\begin{tikzpicture}[x=1.15cm, y=0.85cm]
+  \draw[-{Stealth}, gray!70] (-3.4,0) -- (3.7,0);
+  \draw[black, thick]
+    (-2.55,0) .. controls (-2.25,0) and (-2.15,1.45) .. (-1.75,1.55)
+    .. controls (-1.35,1.45) and (-1.25,0) .. (-0.95,0);
+  \node[above] at (-1.75,1.62) {\(\psi_k\)};
+  \draw[black, thick] (0.55,-0.07) -- (0.55,0.07);
+  \draw[black, thick] (2.15,-0.07) -- (2.15,0.07);
+  \node[below] at (0.55,0) {\(a\)};
+  \node[below] at (2.15,0) {\(b\)};
+  \node[right] at (2.45,1.15) {\(\psi_k\to 0\)};
+\end{tikzpicture}
+\end{center}
+
+\prf{
+Возьмём \(\psi\in\DD(\R)\), \(\psi\not\equiv 0\), с носителем вне \(K\),
+как горб на рисунке, сидящий вне отрезка \((a,b)\).
+Тогда \(\psi/k\to 0\) в \(\DD(\R)\): носители лежат в одном компакте,
+а все производные равномерно стремятся к нулю.
+Окрестность нуля содержит хвост всякой такой последовательности,
+значит \(\psi/k\in U\) при больших \(k\), и носитель по-прежнему не лежит в \(K\).
+}
+
+\stat*{}{Сходимость в \(\DD(\R)\) не порождается метрикой.}
+
+\prf{
+Если бы её порождала метрика, у нуля была бы счётная база окрестностей:
+это упражнение ниже.
+Пусть \(\{U_n\}\) --- такая база.
+Заменяя \(U_n\) на \(U_1\cap\cdots\cap U_n\),
+считаем, что \(U_{n+1}\subset U_n\).
+
+Положим \(K_n=[-n,n]\).
+По лемме выберем \(\psi_n\in U_n\) с \(\supp\psi_n\not\subset K_n\).
+
+Тогда \(\psi_n\to 0\).
+В самом деле, для любой окрестности \(U\) нуля найдётся номер \(N\),
+при котором \(U_N\subset U\), и при \(n\ge N\)
+\[
+\psi_n\in U_n\subset U_N\subset U.
+\]
+
+С другой стороны, носители \(\{\psi_n\}\) не лежат ни в каком одном компакте.
+Любой компакт \(K\subset\R\) содержится в некотором \(K_N\),
+а при \(n\ge N\) носитель \(\psi_n\) из \(K_N\) вылезает.
+По определению сходимости в \(\DD\) последовательность к нулю не сходится.
+Противоречие.
+}
+
+\exr{}{Метризуемая топология должна иметь счётную базу окрестностей нуля.}
+
+% ---------------------------------------------------------------------
+\subsection{Фундаментальное решение оператора Лапласа}
+
+Ищем \(\mathcal{E}\) такое, что \(-\Delta\mathcal{E}=\delta\), при \(n\ge 3\).
+
+План такой.
+\begin{enumerate}
+\item Необходимые условия, которым удовлетворяет \(\mathcal{E}\).
+\item Упростим их.
+\item По упрощённым условиям найдём функцию.
+\item Проверим, что это действительно фундаментальное решение.
+\end{enumerate}
+
+С первой практики: если \(U\) --- ортогональная матрица, то
+\(\delta(Ux)=\delta(x)\), и при \(\lambda\neq 0\)
+\[
+\delta(\lambda x)=\frac{1}{|\lambda|^n}\,\delta(x).
+\]
+Поэтому будем искать радиальное решение \(\mathcal{E}(x)=\mathcal{E}(|x|)\).
+Дальше \(\lambda>0\), так что \(\delta(\lambda x)=\lambda^{-n}\delta(x)\).
+
+Пусть \(-\Delta\mathcal{E}=\delta\). Тогда
+\[
+-(\Delta\mathcal{E})(\lambda x)
+=
+\delta(\lambda x)
+=
+\lambda^{-n}\delta(x).
+\]
+При растяжении лапласиан набирает \(\lambda^2\):
+если \(\mathcal{E}_\lambda(x)=\mathcal{E}(\lambda x)\), то
+\(\Delta\mathcal{E}_\lambda=\lambda^2(\Delta\mathcal{E})(\lambda x)\), откуда
+\[
+(\Delta\mathcal{E})(\lambda x)
+=
+\lambda^{-2}\Delta\bigl(\mathcal{E}(\lambda x)\bigr).
+\]
+Подставляя, получаем
+\[
+-\lambda^{-2}\Delta\bigl(\mathcal{E}(\lambda x)\bigr)
+=
+\lambda^{-n}\delta(x),
+\]
+то есть
+\[
+-\lambda^{n-2}\Delta\bigl(\mathcal{E}(\lambda x)\bigr)
+=
+\delta(x).
+\]
+Правая часть от \(\lambda\) не зависит, поэтому
+\[
+\frac{\partial}{\partial\lambda}
+\Bigl(\lambda^{n-2}\Delta\bigl(\mathcal{E}(\lambda x)\bigr)\Bigr)
+=0.
+\]
+
+Это тождество выполнено, если
+\(\mathcal{E}(\lambda x)=\lambda^{2-n}\mathcal{E}(x)\).
+Действительно, тогда
+\(\Delta\bigl(\mathcal{E}(\lambda\,\cdot\,)\bigr)=\lambda^{2-n}\Delta\mathcal{E}\),
+и
+\(\lambda^{n-2}\Delta\bigl(\mathcal{E}(\lambda\,\cdot\,)\bigr)=\Delta\mathcal{E}\)
+уже не зависит от \(\lambda\).
+
+Получили условия, из которых ищем фундаментальное решение:
+\begin{enumerate}
+\item \(\mathcal{E}(\lambda x)=\lambda^{2-n}\mathcal{E}(x)\);
+\item \(\mathcal{E}(x)=\mathcal{E}(|x|)\).
+\end{enumerate}
+Им удовлетворяет
+\[
+\frac{1}{|x|^{n-2}}.
+\]
+Проверим, что при подходящей постоянной это и есть фундаментальное решение.
+
+Пусть \(\supp\phi\subset B_R\), причём носитель лежит строго внутри шара,
+так что на сфере \(S_R\) сама \(\phi\) и её производные равны нулю.
+По определению производной обобщённой функции
+\begin{align*}
+\Bigl\langle
+    -\Delta\frac{1}{|x|^{n-2}},\,
+    \phi
+\Bigr\rangle
+&=
+\Bigl\langle
+    \frac{1}{|x|^{n-2}},\,
+    -\Delta\phi
+\Bigr\rangle
+=
+\int_{\R^n}
+    \frac{-\Delta\phi}{|x|^{n-2}}\,dx.
+\end{align*}
+Интеграл сходится абсолютно: \(\Delta\phi\) непрерывна и имеет компактный носитель,
+а \(1/|x|^{n-2}\in L_1^{\loc}(\R^n)\) при \(n\ge 3\),
+поскольку \(n-2<n\) (лемма о локальной интегрируемости).
+
+Вырежем маленький шар. При \(x\neq 0\)
+\[
+\nabla\frac{1}{|x|^{n-2}}
+=
+-(n-2)\frac{x}{|x|^n},
+\]
+значит
+\[
+\Delta\frac{1}{|x|^{n-2}}
+=
+-(n-2)\,
+\operatorname{div}\frac{x}{|x|^n}.
+\]
+\begin{align*}
+\partial_{x_i}\frac{x_i}{|x|^n}
+&=
+\frac{1}{|x|^n}
++
+x_i\cdot(-n)\,|x|^{-n-2}x_i
+=
+\frac{1}{|x|^n}
+-
+n\frac{x_i^2}{|x|^{n+2}},
+\\
+\sum_{i=1}^n
+\partial_{x_i}\frac{x_i}{|x|^n}
+&=
+\frac{n}{|x|^n}
+-
+n\sum_{i=1}^n\frac{x_i^2}{|x|^{n+2}}
+=
+\frac{n}{|x|^n}
+-
+\frac{n}{|x|^n}
+=0.
+\end{align*}
+Поэтому \(\Delta(1/|x|^{n-2})=0\) при \(x\neq 0\).
+
+Обозначим \(u(x)=1/|x|^{n-2}\) и
+\(\Omega_\epsilon=B_R\setminus B_\epsilon\).
+Нормаль \(\vec n\) на рисунке --- внешняя для кольца:
+на \(S_\epsilon\) она смотрит в нуль, \(\vec n=-x/|x|\).
+
+\begin{center}
+\begin{tikzpicture}[scale=1.05]
+  \draw[black, thick] (0,0) circle (1.85);
+  \draw[black, thick] (0,0) circle (0.72);
+  \foreach \a in {25,70,115,160,205,250,295,340} {
+    \draw[-{Stealth}, black] (\a:0.72) -- (\a:0.22);
+  }
+  \node at (0.38,0.22) {\(\vec n\)};
+  \node[above right] at (0.55,0.55) {\(S_\epsilon\)};
+\end{tikzpicture}
+\end{center}
+
+Формула интегрирования по частям, она же вторая формула Грина:
+внешняя сфера пропадает вместе с \(\phi\), а \(\Delta u=0\) в кольце, поэтому
+\begin{align*}
+\int_{\Omega_\epsilon} u\,\Delta\phi\,dx
+&=
+\int_{S_\epsilon}
+    \bigl(
+        u\,\partial_n\phi
+        -
+        \phi\,\partial_n u
+    \bigr)\,dS, \\
+\int_{\Omega_\epsilon}
+    \frac{-\Delta\phi}{|x|^{n-2}}\,dx
+&=
+\int_{S_\epsilon}
+    \bigl(
+        \phi\,\partial_n u
+        -
+        u\,\partial_n\phi
+    \bigr)\,dS.
+\end{align*}
+
+На \(S_\epsilon\) имеем \(|x|=\epsilon\), так что \(u=\epsilon^{2-n}\).
+Член с \(\partial_n\phi\) оценивается так:
+\begin{align*}
+\Biggl|
+    \int_{S_\epsilon} u\,\partial_n\phi\,dS
+\Biggr|
+&\le
+\epsilon^{2-n}\max|\partial_n\phi|\cdot|S_\epsilon|
+=
+\max|\partial_n\phi|\cdot|S_1|\cdot\epsilon
+\xrightarrow{\epsilon\to 0} 0,
+\end{align*}
+поскольку \(|S_\epsilon|=|S_1|\,\epsilon^{n-1}\).
+
+Остаётся
+\[
+\lim_{\epsilon\to 0}
+\int_{S_\epsilon}
+    \phi\,
+    \partial_n\Bigl(\frac{1}{|x|^{n-2}}\Bigr)\,dS.
+\]
+Считаем нормальную производную.
+Градиент уже есть, а \(\vec n=-x/|x|\), поэтому
+\begin{align*}
+\partial_n\frac{1}{|x|^{n-2}}
+&=
+\Biggl(
+    \nabla\frac{1}{|x|^{n-2}},\,
+    \vec n
+\Biggr)
+=
+\Biggl(
+    -(n-2)\frac{x}{|x|^n},\,
+    -\frac{x}{|x|}
+\Biggr)
+=
+(n-2)\frac{|x|^2}{|x|^{n+1}}
+=
+\frac{n-2}{|x|^{n-1}}.
+\end{align*}
+На \(S_\epsilon\) это \((n-2)\epsilon^{1-n}\), и
+\begin{align*}
+\int_{S_\epsilon}
+    \phi\,\partial_n u\,dS
+&=
+(n-2)\epsilon^{1-n}
+\int_{S_\epsilon}\phi\,dS
+=
+(n-2)\epsilon^{1-n}|S_\epsilon|
+\cdot
+\frac{1}{|S_\epsilon|}
+\int_{S_\epsilon}\phi\,dS \\
+&=
+(n-2)|S_1|
+\cdot
+\frac{1}{|S_\epsilon|}
+\int_{S_\epsilon}\phi\,dS
+\xrightarrow{\epsilon\to 0}
+(n-2)|S_1|\,\phi(0).
+\end{align*}
+
+Таким образом
+\[
+-\Delta\frac{1}{|x|^{n-2}}
+=
+(n-2)|S_1|\,\delta,
+\]
+и фундаментальное решение есть
+\[
+\mathcal{E}(x)
+=
+\frac{1}{(n-2)|S_1|}
+\cdot
+\frac{1}{|x|^{n-2}}.
+\]
+
+\remm{}{
+При \(n=2\) формула другая:
+\[
+\mathcal{E}(x)
+=
+\frac{1}{2\pi}
+\ln\frac{1}{|x|}.
+\]
+}
+
+\exr{}{
+Доказать, что при \(n=2\) функция
+\(\dfrac{1}{2\pi}\ln\dfrac{1}{|x|}\)
+есть фундаментальное решение оператора \(-\Delta\).
+}
+
+\ex{Потенциал объёма}{
+Пусть \(f\in C(\Omega)\) и \(f\) продолжена нулём вне \(\Omega\). Тогда
+\[
+u^f(y)
+=
+\int_\Omega
+    \mathcal{E}(x)\,f(y-x)\,dx
+\]
+--- это свёртка \(\mathcal{E}*f\).
+}
+
+\ex{Потенциалы простого и двойного слоя}{
+\[
+V^\phi
+=
+\mathcal{E}*\phi\,\delta_{\partial\Omega},
+\qquad
+W^\psi
+=
+\mathcal{E}*
+\Bigl(
+    -\frac{\partial}{\partial\vec n}
+    \bigl(\psi\,\delta_{\partial\Omega}\bigr)
+\Bigr).
+\]
+Двойной слой здесь --- тот же оператор
+\(-\partial/\partial\vec n\), что и в отступлении про плотность и диполь.
+}
+
+% ---------------------------------------------------------------------
+\subsection{Фундаментальное решение оператора теплопроводности}
+
+Ищем \(\Gamma\), для которого
+\[
+\Gamma_t-\Delta\Gamma=\delta(x,t),
+\]
+то есть фундаментальное решение оператора \(u_t-\Delta u\).
+
+План тот же.
+\begin{enumerate}
+\item Необходимые условия.
+\item Достаточные условия для их выполнения.
+\item Претендент, который этим условиям удовлетворяет.
+\end{enumerate}
+
+Растяжение \((x,t)\mapsto(\lambda x,\lambda t)\) не подходит:
+\(\partial_t\) и \(\Delta\) набирают разные степени \(\lambda\).
+Берём \((x,t)\mapsto(\lambda x,\lambda^2 t)\) при \(\lambda>0\).
+Обозначим \(\Gamma_\lambda(x,t)=\Gamma(\lambda x,\lambda^2 t)\). Тогда
+\[
+\partial_t\Gamma_\lambda
+=
+\lambda^2(\partial_t\Gamma)(\lambda x,\lambda^2 t),
+\qquad
+\Delta\Gamma_\lambda
+=
+\lambda^2(\Delta\Gamma)(\lambda x,\lambda^2 t),
+\]
+так что
+\[
+(\Gamma_t-\Delta\Gamma)(\lambda x,\lambda^2 t)
+=
+\lambda^{-2}(\partial_t-\Delta)\Gamma_\lambda.
+\]
+По формуле замены переменных якобиан этого растяжения равен \(\lambda^{n+2}\), поэтому
+\[
+\delta(\lambda x,\lambda^2 t)
+=
+\lambda^{-n-2}\delta(x,t).
+\]
+Если \((\partial_t-\Delta)\Gamma=\delta\), отсюда
+\[
+(\partial_t-\Delta)\Gamma_\lambda
+=
+\lambda^{-n}\delta.
+\]
+Равенство выполнено при всех \(\lambda>0\), когда
+\[
+\Gamma(\lambda x,\lambda^2 t)
+=
+\lambda^{-n}\Gamma(x,t).
+\]
+Как и для Лапласа, ищем решение, радиальное по \(x\):
+\[
+\Gamma(x,t)=\Gamma(|x|,t).
+\]
+
+Зафиксируем \(t>0\) и возьмём \(\lambda=\sqrt{t}\).
+Из однородности
+\[
+\Gamma(x,t)
+=
+\Gamma\bigl(\lambda\cdot(x/\lambda),\,\lambda^2\cdot(t/\lambda^2)\bigr)
+=
+\lambda^{-n}
+\Gamma(x/\lambda,\,t/\lambda^2),
+\]
+а при таком \(\lambda\) имеем \(t/\lambda^2=1\) и \(\lambda^{-n}=t^{-n/2}\), значит
+\[
+\Gamma(x,t)
+=
+t^{-n/2}
+\Gamma\bigl(x/\sqrt{t},\,1\bigr)
+=
+t^{-n/2}
+f\bigl(x/\sqrt{t}\bigr).
+\]
+Предположим, что профиль \(f\) лежит в \(C^2\),
+и что \(L\Gamma=0\) вне нуля, где \(L=\partial_t-\Delta\).
+
+Вместо \(x/\sqrt{t}\) удобнее писать \(|x|^2/t\).
+Так как \(f\) зависит только от \(|x|/\sqrt{t}\), найдётся \(F\), для которой
+\[
+t^{-n/2}f\bigl(x/\sqrt{t}\bigr)
+=
+t^{-n/2}F\bigl(|x|^2/t\bigr).
+\]
+Вне нуля
+\[
+\partial_t
+\Bigl(
+    t^{-n/2}F\bigl(|x|^2/t\bigr)
+\Bigr)
+-
+\Delta_x
+\Bigl(
+    t^{-n/2}F\bigl(|x|^2/t\bigr)
+\Bigr)
+=0.
+\]
+
+Пусть \(r=|x|\) и \(s=r^2/t\).
+Производная по времени:
+\(\partial_t(t^{-n/2})=-(n/2)\,t^{-n/2-1}\) и
+\(\partial_t s=-r^2/t^2\), поэтому
+\[
+\partial_t\bigl(t^{-n/2}F(s)\bigr)
+=
+-\frac n2\,t^{-n/2-1}F(s)
+-
+r^2\,t^{-n/2-2}F'(s).
+\]
+Радиальный лапласиан:
+\(\Delta g(r)=g_{rr}+((n-1)/r)\,g_r\).
+\begin{align*}
+\partial_r F(s)
+&=
+F'\cdot\frac{2r}{t},
+\\
+\partial_{rr} F(s)
+&=
+F''\cdot\frac{4r^2}{t^2}
++
+F'\cdot\frac{2}{t},
+\\
+\Delta_x F(s)
+&=
+F''\cdot\frac{4r^2}{t^2}
++
+F'\cdot\frac{2}{t}
++
+\frac{n-1}{r}
+\cdot
+F'\cdot\frac{2r}{t}
+=
+\frac{4r^2}{t^2}F''
++
+\frac{2n}{t}F'.
+\end{align*}
+Множитель \(t^{-n/2}\) от \(x\) не зависит, так что
+\(\Delta_x(t^{-n/2}F)=t^{-n/2}\Delta_x F\).
+Уравнение \(\partial_t-\Delta=0\) принимает вид
+\begin{align*}
+&-\frac n2\,t^{-n/2-1}F
+-
+r^2\,t^{-n/2-2}F'
+-
+t^{-n/2}
+\Biggl(
+    \frac{4r^2}{t^2}F''
+    +
+    \frac{2n}{t}F'
+\Biggr)
+=0.
+\end{align*}
+Домножим на \(-t^{n/2+1}\).
+Получим
+\[
+\frac n2\,F
++
+\frac{r^2}{t}F'
++
+\frac{4r^2}{t}F''
++
+2n\,F'
+=0.
+\]
+В переменной \(s=r^2/t\) это
+\[
+4s\,F''(s)
++
+(s+2n)\,F'(s)
++
+\frac n2\,F(s)
+=0.
+\]
+
+Положим \(g(s)=4F'(s)+F(s)\). Тогда \(g'=4F''+F'\) и
+\begin{align*}
+sg'+\frac n2\,g
+&=
+s(4F''+F')
++
+\frac n2(4F'+F)
+=
+4s F''
++
+(s+2n)F'
++
+\frac n2\,F.
+\end{align*}
+Уравнение равносильно
+\[
+sg'(s)+\frac n2\,g(s)=0.
+\]
+Его решение
+\[
+g(s)=\frac{C}{|s|^{n/2}}.
+\]
+Осталось решить
+\[
+4F'+F=\frac{C}{|s|^{n/2}}.
+\]
+Возьмём \(C=0\).
+Так проще, и этого достаточно.
+Вторая причина: у правой части особенность при \(s=0\).
+Если \(C\neq 0\), особенность будет и у \(F\),
+а тогда \(\Gamma\) будет иметь особенность вдоль всего луча \(\{x=0,\,t>0\}\).
+Вместе с ней и \(L\Gamma\) окажется дельта-функцией на этом луче,
+тогда как нужна дельта-функция только в нуле.
+
+Решаем \(4F'+F=0\):
+\[
+F(s)=Ce^{-s/4},
+\qquad
+F=C\exp\Bigl(-\frac{|x|^2}{4t}\Bigr).
+\]
+Тем самым при \(t>0\)
+\[
+\Gamma(x,t)
+=
+C\,t^{-n/2}
+\exp\Bigl(-\frac{|x|^2}{4t}\Bigr).
+\]
+
+При фиксированном \(x\) графики такие.
+
+\begin{center}
+\begin{minipage}[t]{0.46\textwidth}
+\centering
+\begin{tikzpicture}[x=1.05cm, y=0.85cm]
+  \draw[-{Stealth}, gray!70] (0,0) -- (3.35,0) node[right] {\(t\)};
+  \draw[-{Stealth}, gray!70] (0,0) -- (0,2.4);
+  \draw[black, thick]
+    (0.12,2.15) .. controls (0.35,1.15) and (0.95,0.38) .. (2.95,0.08);
+  \node at (1.75,1.55) {\(x=0\)};
+  \node[below right] at (1.25,0.45) {\(\Gamma(0,t)\)};
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.46\textwidth}
+\centering
+\begin{tikzpicture}[x=1.05cm, y=0.85cm]
+  \draw[-{Stealth}, gray!70] (0,0) -- (3.35,0) node[right] {\(t\)};
+  \draw[-{Stealth}, gray!70] (0,0) -- (0,2.4);
+  \draw[black, thick]
+    (0,0) .. controls (0.45,0.02) and (0.72,1.65) .. (1.2,1.75)
+    .. controls (1.75,1.65) and (2.2,0.22) .. (3.1,0.04);
+  \node at (2.2,1.55) {\(x\neq 0\)};
+  \node at (2.15,0.85) {\(\Gamma(x,t)\)};
+\end{tikzpicture}
+\end{minipage}
+\end{center}
+
+Производные устроены так же:
+\[
+D_t^k D_x^\alpha\Gamma(x,t)
+=
+\phi(t,x)
+\exp\Bigl(-\frac{|x|^2}{4t}\Bigr),
+\]
+где \(\phi\) --- рациональная функция \(t\) и \(x\).
+Графики того же вида.
+
+Продолжим \(\Gamma\) нулём при \(t\le 0\).
+Степень \(t\) та же, что и выше:
+\[
+\Gamma(x,t)
+=
+\begin{cases}
+C\,t^{-n/2}
+\exp\bigl(-|x|^2/(4t)\bigr),
+& t>0, \\[4pt]
+0, & t\le 0.
+\end{cases}
+\]
+Такая функция лежит в \(C^\infty(\R^{n+1}\setminus\{0\})\).
+
+\remm{Отступление}{
+Если \(Lu=\delta\) и \(Lu_{\text{одн}}=0\), то \(u+u_{\text{одн}}\) тоже решение.
+У неоднородного уравнения целое аффинное подпространство решений,
+так что фундаментальное решение не единственно.
+}
+
+По определению производных
+\[
+\langle
+    \Gamma_t-\Delta_x\Gamma,\,
+    \phi
+\rangle
+=
+\langle
+    \Gamma,\,
+    -\phi_t-\Delta_x\phi
+\rangle.
+\]
+
+\lem{}{
+\(\Gamma(x,t)\) и \(D_{x_i}\Gamma(x,t)\) локально суммируемы,
+и при \(t>0\) интеграл
+\[
+\int_{\R^n}\Gamma(x,t)\,dx
+\]
+не зависит от \(t\).
+Отсюда \(\Gamma\in L_1^{\loc}(\R^{n+1})\).
+}
+
+\prf{
+При \(t\le 0\) функция равна нулю.
+При \(t>0\) посчитаем интеграл от профиля:
+\[
+\int_{\R^n}
+    t^{-n/2}
+    \exp\Bigl(-\frac{|x|^2}{4t}\Bigr)\,dx.
+\]
+Замена \(x=2\sqrt{t}\,z\), \(dx=2^n t^{n/2}\,dz\),
+и \(|x|^2/(4t)=|z|^2\):
+\begin{align*}
+&=
+2^n
+\int_{\R^n}\exp(-|z|^2)\,dz
+=
+2^n
+\Biggl(
+    \int_{\R}\exp(-s^2)\,ds
+\Biggr)^{n}
+=
+2^n\pi^{n/2}.
+\end{align*}
+Следовательно
+\[
+\int_{\R^n}\Gamma(x,t)\,dx
+=
+C\cdot 2^n\pi^{n/2},
+\]
+правая часть конечна и от \(t\) не зависит.
+Вместе с нулём при \(t\le 0\) это даёт \(\Gamma\in L_1^{\loc}\).
+
+У \(D_{x_i}\Gamma\) тот же вид: рациональный множитель на экспоненту.
+После той же замены интеграл по \(x\) конечен,
+так что и \(D_{x_i}\Gamma\) локально суммируема.
+}
 
 \end{document}

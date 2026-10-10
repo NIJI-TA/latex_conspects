@@ -166,13 +166,19 @@
 % ---------------------------------------------------------------------
 \theoremstyle{plain}
 \newtheorem{theorem}{Теорема}[section]
+\newtheorem*{theorem*}{Теорема}
 \newtheorem{lemma}{Лемма}[section]
+\newtheorem*{lemma*}{Лемма}
 \newtheorem{corollary}{Следствие}[section]
+\newtheorem*{corollary*}{Следствие}
 \newtheorem{statement}{Утверждение}[section]
+\newtheorem*{statement*}{Утверждение}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Определение}[section]
+\newtheorem*{definition*}{Определение}
 \newtheorem{example}{Пример}[section]
+\newtheorem*{example*}{Пример}
 
 \renewcommand{\proofname}{Доказательство}
 \renewcommand{\qedsymbol}{\(\blacksquare\)}
@@ -185,18 +191,19 @@
     \fi
 }
 
-\newcommand{\thm}[2]{\notes@wrap{theorem}{#1}{#2}}
-\newcommand{\lem}[2]{\notes@wrap{lemma}{#1}{#2}}
-\newcommand{\coroll}[2]{\notes@wrap{corollary}{#1}{#2}}
-\newcommand{\stat}[2]{\notes@wrap{statement}{#1}{#2}}
-\newcommand{\dfn}[2]{\notes@wrap{definition}{#1}{#2}}
-\newcommand{\ex}[2]{\notes@wrap{example}{#1}{#2}}
-\newcommand{\prf}[1]{\begin{proof}#1\end{proof}}
+\newcommand{\thm}{\@ifstar{\notes@wrap{theorem*}}{\notes@wrap{theorem}}}
+\newcommand{\lem}{\@ifstar{\notes@wrap{lemma*}}{\notes@wrap{lemma}}}
+\newcommand{\coroll}{\@ifstar{\notes@wrap{corollary*}}{\notes@wrap{corollary}}}
+\newcommand{\stat}{\@ifstar{\notes@wrap{statement*}}{\notes@wrap{statement}}}
+\newcommand{\dfn}{\@ifstar{\notes@wrap{definition*}}{\notes@wrap{definition}}}
+\newcommand{\ex}{\@ifstar{\notes@wrap{example*}}{\notes@wrap{example}}}
+\newcommand{\notes@proof}[1]{\begin{proof}#1\end{proof}}
+\newcommand{\prf}{\@ifstar{\notes@proof}{\notes@proof}}
 
 % Упражнение: мелкий отступной блок, не наравне с теоремой
 \newcounter{exercise}[section]
 \renewcommand{\theexercise}{\thesection.\arabic{exercise}}
-\newcommand{\exr}[2]{%
+\newcommand{\notes@exercise@begin}{%
     \par\addvspace{8pt}%
     \begin{list}{}{%
         \small
@@ -212,8 +219,8 @@
         \setlength{\partopsep}{0pt}%
     }%
     \item\relax
-    \refstepcounter{exercise}%
-    \textit{Упр.~\theexercise.}%
+}
+\newcommand{\notes@exercise@body}[2]{%
     \if\relax\detokenize{#1}\relax\else
         \ \textit{#1.}%
     \fi
@@ -221,6 +228,18 @@
     \end{list}%
     \addvspace{6pt}%
 }
+\newcommand{\notes@exercise}[2]{%
+    \notes@exercise@begin
+    \refstepcounter{exercise}%
+    \textit{Упр.~\theexercise.}%
+    \notes@exercise@body{#1}{#2}%
+}
+\newcommand{\notes@exercise@star}[2]{%
+    \notes@exercise@begin
+    \textit{Упр.}%
+    \notes@exercise@body{#1}{#2}%
+}
+\newcommand{\exr}{\@ifstar{\notes@exercise@star}{\notes@exercise}}
 
 % Замечания: обычные --- жирный заголовок;
 % Напоминание / Отступление --- тонкая чёрная полоска слева
@@ -271,12 +290,13 @@
 }
 \ExplSyntaxOff
 
-\newcommand{\rem}[2]{%
+\newcommand{\notes@rem}[2]{%
     \notes@ifsidebar{#1}
         {\notes@remarkboxed{#1}{#2}}
         {\notes@remarkplain{#1}{#2}}%
 }
-\newcommand{\remm}[2]{\rem{#1}{#2}}
+\newcommand{\rem}{\@ifstar{\notes@rem}{\notes@rem}}
+\newcommand{\remm}{\@ifstar{\notes@rem}{\notes@rem}}
 
 % ---------------------------------------------------------------------
 % Частые математические макросы
