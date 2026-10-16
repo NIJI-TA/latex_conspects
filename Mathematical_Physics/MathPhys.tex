@@ -3727,4 +3727,553 @@ C\cdot 2^n\pi^{n/2},
 так что и \(D_{x_i}\Gamma\) локально суммируема.
 }
 
+\pagebreak
+% =====================================================================
+\section{Практика 7}
+\renewcommand{\notesheader}{Математическая физика \(\cdot\) Практика 7 \(\cdot\) 16.10}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\subsection{Фундаментальное решение теплопроводности --- продолжение}
+
+На прошлой паре решали \(\Gamma_t-\Delta\Gamma=\delta(x,t)\)
+и нашли претендента
+\[
+\Gamma(x,t)
+=
+\begin{cases}
+C\,t^{-n/2}\exp\bigl(-|x|^2/(4t)\bigr), & t>0, \\[4pt]
+0, & t\le 0.
+\end{cases}
+\]
+
+\lem{}{
+\(\Gamma\) и \(D_{x_i}\Gamma\) лежат в \(L_1^{\loc}(\R^{n+1})\).
+}
+
+\prf{
+Часть уже была на прошлой паре: при \(t>0\)
+\begin{equation}
+\int_{\R^n}\Gamma(x,t)\,dx
+=
+C\cdot 2^n\pi^{n/2},
+\tag{$*$}
+\end{equation}
+и правая часть от \(t\) не зависит.
+При \(t\le 0\) функция равна нулю.
+Значит для всяких \(a<b\) и всякого компакта \(K\subset\R^n\)
+\[
+\int_a^b\int_K|\Gamma|\,dx\,dt
+\le
+\int_{\{t\in[a,b]:\,t>0\}}
+    |C|\cdot 2^n\pi^{n/2}\,dt
+<\infty,
+\]
+потому что по \(x\) интеграл по \(K\) не больше интеграла по всему \(\R^n\).
+
+Теперь производная. При \(t>0\)
+\[
+D_{x_i}\Gamma
+=
+C\,t^{-n/2}
+\Bigl(-\frac{x_i}{2t}\Bigr)
+\exp\Bigl(-\frac{|x|^2}{4t}\Bigr),
+\]
+а при \(t\le 0\) она нулевая.
+Та же замена \(x=2\sqrt{t}\,z\), \(dx=2^n t^{n/2}\,dz\).
+В интеграле по всему \(\R^n\) остаётся нечётный множитель \(z_i\),
+поэтому
+\[
+\int_{\R^n}D_{x_i}\Gamma(x,t)\,dx=0,
+\]
+а не ненулевая константа.
+Для локальной суммируемости нужен модуль:
+\(|x_i|=2\sqrt{t}\,|z_i|\), и
+\[
+\int_{\R^n}|D_{x_i}\Gamma|\,dx
+=
+|C|\,2^n t^{-1/2}
+\int_{\R^n}|z_i|\exp(-|z|^2)\,dz
+=
+C't^{-1/2}.
+\]
+Отсюда
+\[
+\int_a^b\int_K|D_{x_i}\Gamma|\,dx\,dt
+\le
+\int_{\{t\in[a,b]:\,t>0\}}
+    C't^{-1/2}\,dt
+<\infty,
+\]
+поскольку \(\int_0^1 t^{-1/2}\,dt<\infty\).
+}
+
+Проверим, что при подходящем \(C\) это фундаментальное решение.
+Как на прошлой паре,
+\[
+\langle\Gamma_t-\Delta\Gamma,\,\phi\rangle
+=
+\langle\Gamma,\,-\phi_t-\Delta\phi\rangle
+=
+\int_0^\infty\int_{\R^n}
+    \Gamma\,(-\phi_t-\Delta\phi)\,dx\,dt.
+\]
+Носитель \(\phi\) компактен, так что на больших \(t\) граничный член пропадает.
+Если носитель задевает плоскость \(t=0\), в нуле \(\Gamma\) особа,
+и нижний предел нельзя ставить сразу в \(t=0\).
+
+\begin{center}
+\begin{tikzpicture}[x=1.05cm, y=0.9cm]
+  \draw[-{Stealth}, gray!70] (-2.5,0) -- (3.15,0) node[right] {\(x\)};
+  \draw[-{Stealth}, gray!70] (0,-1.55) -- (0,1.75) node[above] {\(t\)};
+  \draw[black, thick]
+    plot[smooth cycle, tension=0.7]
+    coordinates {(-1.15,0.15) (-0.25,1.0) (1.05,0.8) (1.65,0.05)
+                 (1.3,-0.8) (0.15,-1.0) (-0.85,-0.5)};
+  \node at (0.15,0.42) {\(\supp\phi\)};
+  \node[right] at (1.95,0.8) {\(\phi=0\)};
+\end{tikzpicture}
+\end{center}
+
+Поскольку \(\Gamma\in L_1^{\loc}\), интеграл сходится,
+и полоску \(0<t<\epsilon\) можно вырезать.
+Перекинем производные обратно на \(\Gamma\):
+при \(t\ge\epsilon\) функция гладкая, интегрирование по частям даёт
+\begin{align*}
+&\int_\epsilon^\infty\int_{\R^n}
+    \Gamma\,(-\phi_t-\Delta\phi)\,dx\,dt \\
+&=
+\int_\epsilon^\infty\int_{\R^n}
+    (\Gamma_t-\Delta\Gamma)\,\phi\,dx\,dt
++
+\int_{\R^n}\Gamma(x,\epsilon)\,\phi(x,\epsilon)\,dx.
+\end{align*}
+При \(t>0\) выполнено \(\Gamma_t-\Delta\Gamma=0\),
+так что объёмный интеграл пропадает. Остаётся
+\[
+\lim_{\epsilon\to 0}
+\int_{\R^n}
+    C\,\epsilon^{-n/2}
+    \exp\Bigl(-\frac{|x|^2}{4\epsilon}\Bigr)
+    \phi(x,\epsilon)\,dx.
+\]
+Замена \(x=2\sqrt{\epsilon}\,z\), \(dx=2^n\epsilon^{n/2}\,dz\):
+\[
+\lim_{\epsilon\to 0}
+C\cdot 2^n
+\int_{\R^n}
+    \exp(-|z|^2)\,
+    \phi\bigl(2\sqrt{\epsilon}\,z,\,\epsilon\bigr)\,dz.
+\]
+Подынтегральное выражение сходится к
+\(\exp(-|z|^2)\,\phi(0,0)\)
+и мажорируется интегрируемой функцией
+\(\|\phi\|_\infty\exp(-|z|^2)\).
+По теореме Лебега предел равен
+\[
+C\cdot 2^n\pi^{n/2}\,\phi(0,0)
+=
+C\cdot 2^n\pi^{n/2}\,
+\langle\delta,\,\phi\rangle.
+\]
+Берём \(C=1/(2^n\pi^{n/2})\).
+Поскольку \((2\sqrt{\pi t})^n=2^n\pi^{n/2}t^{n/2}\),
+фундаментальное решение есть
+\[
+\Gamma(x,t)
+=
+\begin{cases}
+\dfrac{1}{(2\sqrt{\pi t})^n}
+\exp\Bigl(-\dfrac{|x|^2}{4t}\Bigr),
+& t>0, \\[6pt]
+0, & t\le 0.
+\end{cases}
+\]
+
+Тем самым нашлись фундаментальные решения тех операторов,
+которые рассматривались в курсе прошлого семестра.
+Они дают информацию и о других решениях того же оператора.
+
+% ---------------------------------------------------------------------
+\subsection{Гипоэллиптичность оператора}
+
+Пусть \(L=P(D)\) и \(\mathcal{E}\) --- фундаментальное решение \(L\).
+
+\dfn{Гипоэллиптический оператор}{
+\(L\) называется гипоэллиптическим, если
+\(\operatorname{singsupp}\mathcal{E}\subset\{0\}\).
+}
+
+\ex{}{
+\(-\Delta\) гипоэллиптичен:
+\[
+\mathcal{E}(x)
+=
+\frac{1}{(n-2)|S_1|}\cdot\frac{1}{|x|^{n-2}},
+\qquad n\ge 3.
+\]
+}
+
+\ex{}{
+\(\partial_t-\Delta_x\) гипоэллиптичен: фундаментальное решение только что нашли.
+}
+
+\ex{Антипример}{
+\(\partial_{tt}-\Delta_x\) не гипоэллиптичен.
+}
+
+Теперь зададимся таким вопросом, в    ерно ли, что
+\[
+Lu=f,\qquad f\in C^\infty(\Omega)
+\quad\Rightarrow\quad
+u\in C^\infty(\Omega)?
+\]
+Казалось бы, \(u=\mathcal{E}*f\), и тогда
+\[
+Lu
+=
+L(\mathcal{E}*f)
+=
+(L\mathcal{E})*f
+=
+\delta*f
+=f.
+\]
+Два возражения. Свёртка может не существовать.
+И даже если существует, \(\mathcal{E}*f\) --- это всего лишь какое-то решение,
+не обязательно то \(u\), которое было дано.
+
+\lem{}{
+Пусть \(u\in\DD'(\R^n)\) и свёртка \(Lu*\mathcal{E}\) существует.
+Тогда \(Lu*\mathcal{E}=u\).
+}
+
+\prf{
+\[
+Lu*\mathcal{E}
+=
+u*(L\mathcal{E})
+=
+u*\delta
+=u.
+\]
+}
+
+\thm{}{
+Пусть \(L\) гипоэллиптичен, \(\mathcal{E}\) --- его фундаментальное решение,
+\(f\in C^\infty(\Omega)\) и \(Lu=f\).
+Тогда \(u\in C^\infty(\Omega)\).
+}
+
+\prf{
+Достаточно для всякого \(x\in\Omega\) найти шар
+\(B\subset\Omega\), в котором \(u\in C^\infty\).
+
+\begin{center}
+\begin{tikzpicture}[scale=1.05]
+  \draw[black, thick]
+    plot[smooth cycle, tension=0.65]
+    coordinates {(-2.35,0.1) (-1.45,1.15) (0.25,1.35) (1.75,0.8)
+                 (2.25,-0.2) (1.35,-1.15) (-0.25,-1.25) (-1.75,-0.7)};
+  \node[above right] at (1.45,0.85) {\(\Omega\)};
+  \draw[black, thick] (0,0) circle (1.08);
+  \draw[black, thick] (0,0) circle (0.42);
+  \fill (0,0) circle (1.1pt);
+  \node[below left] at (-0.02,-0.02) {\(x\)};
+  \node[above=1pt] at (0,0.42) {\(B_{\epsilon/2}\)};
+  \node[right] at (1.14,0.1) {\(B_\epsilon\)};
+\end{tikzpicture}
+\end{center}
+
+Возьмём \(x\in\Omega\) и \(\epsilon>0\) так, чтобы \(B_\epsilon(x)\subset\Omega\).
+Пусть \(\eta\in C_0^\infty(\R^n)\),
+\(\eta\equiv 1\) в \(B_{\epsilon/2}(x)\)
+и \(\eta\equiv 0\) вне \(B_\epsilon(x)\).
+Положим \(\tilde u:=\eta u\).
+В шаре \(B_{\epsilon/2}(x)\) имеем \(\tilde u=u\).
+
+Продолжим \(\tilde u\) на всё \(\R^n\): для \(\phi\in C_0^\infty(\R^n)\)
+\[
+\langle\tilde u,\,\phi\rangle
+=
+\langle u,\,\phi\eta\rangle.
+\]
+Носитель \(\eta\) лежит в \(\Omega\), так что \(\phi\eta\in\DD(\Omega)\).
+
+\exr{}{
+Проверить, что этот функционал корректно задаёт
+\(\tilde u\in\DD'(\R^n)\).
+}
+
+Носитель \(\tilde u\) компактен, поэтому свёртка \(L\tilde u*\mathcal{E}\)
+существует, и по лемме \(L\tilde u*\mathcal{E}=\tilde u\).
+Для свёртки в смысле Хёрмандера, как в упражнении пятой практики,
+\[
+\operatorname{singsupp}(f*g)
+\subset
+\overline{\operatorname{singsupp}f+\operatorname{singsupp}g}.
+\]
+По определению гипоэллиптичности
+\(\operatorname{singsupp}\mathcal{E}\subset\{0\}\).
+
+Раскроем \(L(\eta u)\). Члены, в которых производные не попадают на \(\eta\),
+собираются в \(\eta\cdot Lu\), а остальные составляют \(w\):
+\[
+L\tilde u
+=
+L(\eta u)
+=
+\eta\cdot Lu+w,
+\]
+где \(w\) --- сумма слагаемых вида
+\(C\,D^\alpha\eta\cdot D^\beta u\) с \(|\alpha|>0\).
+По условию \(Lu=f\in C^\infty(\Omega)\), а \(\eta\in C_0^\infty(\Omega)\),
+значит \(\eta\cdot Lu\in C^\infty(\R^n)\)
+(вне \(\Omega\) эта функция нулевая).
+В \(B_{\epsilon/2}(x)\) все производные \(\eta\) порядка \(|\alpha|>0\) равны нулю,
+поэтому там \(w=0\). Следовательно
+\begin{align*}
+\operatorname{singsupp}w
+&\subset
+\supp w
+\subset
+\R^n\setminus B_{\epsilon/2}(x), \\
+\operatorname{singsupp}L\tilde u
+&\subset
+\R^n\setminus B_{\epsilon/2}(x).
+\end{align*}
+Дополнение открытого шара замкнуто, так что
+\begin{align*}
+\operatorname{singsupp}\tilde u
+&=
+\operatorname{singsupp}(L\tilde u*\mathcal{E}) \\
+&\subset
+\overline{
+    \operatorname{singsupp}L\tilde u
+    +
+    \operatorname{singsupp}\mathcal{E}
+}
+\subset
+\R^n\setminus B_{\epsilon/2}(x).
+\end{align*}
+Значит \(\tilde u\in C^\infty(B_{\epsilon/2}(x))\).
+В этом шаре \(\tilde u=u\), поэтому
+\(u\in C^\infty(B_{\epsilon/2}(x))\).
+}
+
+% ---------------------------------------------------------------------
+\subsection{Обобщённые функции с носителем в точке}
+
+На самом деле все это время от нас скрывали всю правду! Схему вложений с первой практики можно продолжить следующим образом:
+\[
+\begin{array}{ccc}
+X & & X' \\[4pt]
+L_p(\Omega) & & L_{p'}(\Omega) \\
+\cup & & \cap \\
+C_0(\Omega) & & \mathcal{M}(\Omega) \\
+\cup & & \cap \\
+\vdots & & \vdots \\
+\cup & & \cap \\
+\mathcal{E}(\Omega)=C^\infty(\Omega) & & \mathcal{E}'(\Omega) \\
+\cup & & \cap \\
+S(\R^n) & & S'(\R^n) \\
+\cup & & \cap \\
+C_0^\infty(\Omega) & & \DD'(\Omega)
+\end{array}
+\]
+Здесь \(p'=p/(p-1)\),
+а \(\mathcal{E}'(\Omega)\), \(S'(\R^n)\) и \(\DD'(\Omega)\) ---
+пространства обобщённых функций.
+
+\dfn{Пространство Шварца}{
+\[
+S(\R^n)
+=
+\Bigl\{
+    u\in C^\infty(\R^n)
+    \ \Big|\
+    \forall\alpha,\,m\quad
+    \sup_{x\in\R^n}
+        |D^\alpha u(x)|\,(1+|x|)^m
+    <\infty
+\Bigr\}.
+\]
+На ограниченном множестве множитель \((1+|x|)^m\) ограничен,
+и то же условие не отличается от обычной гладкости $C^\infty$.
+}
+
+
+\remm{Отступление}{
+Пусть \(K_1\subset K_2\subset\cdots\) --- компакты,
+исчерпывающие \(\Omega\).
+Топология \(C^\infty(\Omega)\) порождается полунормами
+\[
+p_m(f)
+=
+\max_{x\in K_m,\,|\alpha|\le m}|D^\alpha f(x)|.
+\]
+У пространства Шварца полунорма берётся по всему \(\R^n\),
+как в определении выше:
+\[
+p_m(f)
+=
+\sup_{x\in\R^n,\,|\alpha|\le m}
+    |D^\alpha f(x)|\,(1+|x|)^m.
+\]
+Максимум только по \(K_m\) поведение на бесконечности не контролирует.
+
+Полунорма \(p\) непрерывна на \(\DD(\Omega)\), если для всякого компакта
+\(K\subset\Omega\) найдутся \(m_K\in\N\) и \(C_K>0\) такие, что
+\[
+\supp f\subset K
+\quad\Rightarrow\quad
+p(f)
+\le
+C_K\max_{|\alpha|\le m_K,\,x\in K}|D^\alpha f(x)|.
+\]
+Именно такие полунормы задают топологию \(\DD(\Omega)\).
+
+Система полунорм \(\{p_\alpha\}_{\alpha\in A}\) задаёт топологию,
+если множества
+\[
+V_{p_{\alpha_1},\ldots,p_{\alpha_m},\epsilon}
+=
+\bigl\{
+    x\in X
+    \ \big|\
+    p_{\alpha_1}(x)<\epsilon,\,\ldots,\,p_{\alpha_m}(x)<\epsilon
+\bigr\}
+\]
+образуют базу окрестностей нуля.
+}
+
+\thm{}{
+Пусть топология топологического векторного пространства \(X\)
+задана системой полунорм \(\{p_\alpha\}_{\alpha\in A}\).
+Линейный функционал \(f\colon X\to\R\) непрерывен тогда и только тогда,
+когда найдутся \(\alpha_1,\ldots,\alpha_m\in A\) и постоянная \(C\), для которых
+при всех \(x\in X\)
+\[
+|f(x)|
+\le
+C\sum_{k=1}^m p_{\alpha_k}(x).
+\]
+}
+
+\prf{
+Необходимость.
+Из непрерывности в нуле есть окрестность \(U\) нуля,
+на которой \(|f|\le 1\).
+Множества \(V\) образуют базу, поэтому найдутся
+\(\epsilon>0\) и индексы \(\alpha_1,\ldots,\alpha_m\) с
+\(V_{p_{\alpha_1},\ldots,p_{\alpha_m},\epsilon}\subset U\).
+Положим
+\[
+p(x)=\max_{i=1,\ldots,m}p_{\alpha_i}(x).
+\]
+Тогда \(p(x)<\epsilon\) влечёт \(|f(x)|\le 1\).
+
+Если \(p(x)=0\), то для всякого \(t>0\) также \(p(tx)=0\),
+значит \(|f(tx)|=t|f(x)|\le 1\).
+Это возможно при всех \(t>0\) только если \(f(x)=0\).
+
+Если \(p(x)\ne 0\), возьмём
+\(y=(\epsilon/2)\,x/p(x)\).
+Тогда \(p(y)=\epsilon/2<\epsilon\), так что \(|f(y)|\le 1\).
+Но
+\[
+|f(y)|
+=
+\frac{\epsilon}{2p(x)}\,|f(x)|,
+\]
+откуда \(|f(x)|\le(2/\epsilon)\,p(x)\).
+Поскольку \(p(x)\le\sum_{i=1}^m p_{\alpha_i}(x)\),
+\[
+|f(x)|
+\le
+\frac{2}{\epsilon}
+\sum_{i=1}^m p_{\alpha_i}(x).
+\]
+
+Достаточность.
+Пусть \(|f(x)|\le C\sum_{k=1}^m p_{\alpha_k}(x)\).
+Для заданного \(\epsilon>0\) положим
+\[
+U
+=
+V_{p_{\alpha_1},\ldots,p_{\alpha_m},\, \epsilon/(2Cm)}.
+\]
+Если \(x\in U\), то
+\[
+|f(x)|
+\le
+C\sum_{k=1}^m\frac{\epsilon}{2Cm}
+=
+\frac{\epsilon}{2}
+<\epsilon.
+\]
+Значит \(f(U)\subset(-\epsilon,\epsilon)\).
+}
+
+\remm{}{
+Отсюда для \(f\in\DD'(\Omega)\) и для \(\phi\) с носителем
+в фиксированном компакте
+\[
+|\langle f,\,\phi\rangle|
+\le
+C\max_{|\alpha|\le m}|D^\alpha\phi|.
+\]
+Та же оценка верна для функционалов из \(\mathcal{E}'(\Omega)\) и из \(S'(\R^n)\).
+}
+
+Это все конечно интересно, но остается вопрос, а зачем нам это вообще надо было и как это связано с обобщенными функциями с носителем в точке. Далее ответ)
+
+Давайте рассмотрим такое $f$, что \(\supp f=\{0\}\).
+Так, как мы уже знаем, устроены \(\delta\) и \(D^\alpha\delta\). А какие еще примеры могут быть, описывает следующее утверждение.
+
+\stat{}{
+Если \(f\in\DD'(\R^n)\) и \(\supp f=\{0\}\), то
+\[
+f=\sum_{|\alpha|\le m}C_\alpha D^\alpha\delta,
+\]
+и тем самым \(f\) продолжается до функционала из \((C^m(\R^n))^*\).
+}
+
+Возьмём \(\chi\in C_0^\infty(\R^n)\),
+равную \(1\) на \(B_1\) и \(0\) вне \(B_2\),
+и положим \(\chi_\epsilon(x)=\chi(x/\epsilon)\).
+Тогда \(\chi_\epsilon\equiv 1\) на \(B_\epsilon\)
+и \(\chi_\epsilon\equiv 0\) вне \(B_{2\epsilon}\).
+
+\begin{center}
+\begin{tikzpicture}[x=1.2cm, y=1.25cm]
+  \draw[-{Stealth}, gray!70] (-2.7,0) -- (2.85,0) node[right] {\(x\)};
+  \draw[-{Stealth}, gray!70] (0,-0.2) -- (0,1.45);
+  \draw[black, thick]
+    (-2.45,0) -- (-2,0)
+    .. controls (-1.7,0) and (-1.4,1) .. (-1,1)
+    -- (1,1)
+    .. controls (1.4,1) and (1.7,0) .. (2,0)
+    -- (2.45,0);
+  \node[below] at (-2,0) {\(-2\epsilon\)};
+  \node[below] at (-1,0) {\(-\epsilon\)};
+  \node[below] at (1,0) {\(\epsilon\)};
+  \node[below] at (2,0) {\(2\epsilon\)};
+  \node[above] at (0.55,1.02) {\(\chi_\epsilon\)};
+\end{tikzpicture}
+\end{center}
+
+Поскольку \(\chi_\epsilon\equiv 1\) в окрестности нуля,
+а \(\supp f=\{0\}\),
+\[
+\chi_\epsilon f=f.
+\]
+Из замечания выше получаем
+\[
+|\langle f,\,\phi\rangle|
+\le
+C\max_{|\alpha|\le m}|D^\alpha\phi|.
+\]
+Продолжение следует.
+
 \end{document}
