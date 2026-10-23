@@ -29,7 +29,7 @@ L_1(\Omega) & & L_\infty(\Omega) \\
 \cup & & \cap \\
 L_p(\Omega) & & L_{p'}(\Omega) \\
 \cup & & \cap \\
-C_0(\Omega) & & \mathcal{M}(\Omega) \\
+C(\Omega) & & \mathcal{M}(\Omega) \\
 \cup & & \cap \\
 \dots & & \ldots
 \end{array}
@@ -71,7 +71,7 @@ C_0(\Omega) & & \mathcal{M}(\Omega) \\
 (Богачев В.\,И. ``Основы теории мер'', Том 2, стр.~70).
 }
 
-\exr{}{
+\exr{}{\textit{(Решено Геной тут \ref{ex:1.3:solved}.)}
 Показать, что такая сходимость не может быть порождена метрикой.%
 \label{exr:d-not-metric}%
 }
@@ -195,12 +195,53 @@ $$
 
 \begin{center}
 \begin{tikzpicture}[scale=1.05, baseline=(current bounding box.center)]
+  \usetikzlibrary{arrows.meta}
+  
+  % --- ОБЛАСТЬ \Omega (слева) ---
   \draw[black, thick] (0,0) ellipse (1.45cm and 0.9cm);
-  \node at (0,0) {\(\Omega_2\)};
-  \draw[-{Stealth}, black, thick] (1.85,0.12) -- (3.35,0.12);
-  \node[above] at (2.6,0.12) {\(\Phi\)};
+  \node at (0,0.6) {\(\Omega_2\)};
+  
+  % Прямая сетка внутри \Omega
+  \begin{scope}
+    \clip (0,0) ellipse (1.45cm and 0.9cm);
+    \foreach \x in {-1.2,-0.8,-0.4,0,0.4,0.8,1.2} \draw[gray, opacity=0.25] (\x,-1) -- (\x,1);
+    \foreach \y in {-0.6,-0.3,0,0.3,0.6} \draw[gray, opacity=0.25] (-1.5,\y) -- (1.5,\y);
+  \end{scope}
+  
+  % Точка x
+  \fill[black] (-0.7,-0.2) circle (1.5pt) node[below right, color=black, font=\footnotesize] {\(x\)};
+
+  % --- СТРЕЛКИ МЕЖДУ ОБЛАСТЯМИ ---
+  % Прямое отображение \Phi
+  \draw[-{Stealth}, black, thick] (1.75,0.25) -- (3.45,0.25);
+  \node[above] at (2.6,0.25) {\(\Phi\)};
+  
+  % Обратное отображение \Phi^{-1} (пунктиром)
+  \draw[{Stealth}-, gray, dashed, line width=0.5pt] (1.75,-0.25) -- (3.45,-0.25);
+  \node[below, color=gray] at (2.6,-0.25) {\(\Phi^{-1}\)};
+
+  % --- ОБЛАСТЬ \Omega_1 (справа) ---
   \draw[black, thick] (5.2,0) ellipse (1.45cm and 0.9cm);
-  \node at (5.2,0) {\(\Omega_1\)};
+  \node at (5.2,0.6) {\(\Omega_1\)};
+  
+  % Искаженная сетка внутри \Omega_1 (через кривые Безье)
+  \begin{scope}[shift={(5.2,0)}]
+    \clip (0,0) ellipse (1.45cm and 0.9cm);
+    
+    % Вертикальные кривые линии (плавный изгиб вправо в центре)
+    \foreach \x in {-1.2,-0.8,-0.4,0,0.4,0.8,1.2} {
+      \draw[gray, opacity=0.25] (\x,-1) .. controls (\x+0.15, -0.1) and (\x+0.15, 0.3) .. (\x,1);
+    }
+    
+    % Горизонтальные кривые линии (волнообразный изгиб)
+    \foreach \y in {-0.6,-0.3,0,0.3,0.6} {
+      \draw[gray, opacity=0.25] (-1.5,\y) .. controls (-0.5,\y+0.4) and (0.5,\y-0.2) .. (1.5,\y);
+    }
+  \end{scope}
+  
+  % Точка y = \Phi(x)
+  \fill[black] (4.58,-0.18) circle (1.5pt) node[below right, color=black, font=\footnotesize] {\(y = \Phi(x)\)};
+
 \end{tikzpicture}
 \captionof{figure}{Диффеоморфизм \(\Phi\)}
 \end{center}
@@ -488,155 +529,228 @@ $$
 совпадает с \(\supp f\) в стандартном смысле.
 }
 
-% ---------------------------------------------------------------------
+
 \subsection{Операции над обобщёнными функциями}
 
 \subsubsection{Умножение на \(C^\infty(\Omega)\)-функции}
-\(a \in C^\infty(\Omega)\), \(f \in \DD'(\Omega)\), хотим определить
-\(a \cdot f\).
-Рассмотрим \(f \in L_1^{\loc}(\Omega)\):
+Пусть \(a \in C^\infty(\Omega)\) и \(f \in \DD'(\Omega)\). Мы хотим определить произведение \(a \cdot f\).
+
+\noindent Рассмотрим регулярную обобщенную функцию \(f \in L_1^{\loc}(\Omega)\) и тест-функцию \(\phi \in C_0^\infty(\Omega)\):
 \[
 \langle af,\, \phi \rangle
 =
-\int_\Omega af\,\phi
+\int_\Omega a(x)f(x)\phi(x)\,dx
 =
-\int_\Omega f(a\phi)
+\int_\Omega f(x)\big(a(x)\phi(x)\big)\,dx
 =
 \langle f,\, a\phi \rangle.
 \]
+Поскольку для любой \(\phi \in C_0^\infty(\Omega)\) произведение \(a\phi\) также принадлежит \(C_0^\infty(\Omega)\), это равенство берут за основу общего определения.
 
 \dfn{}{
-\(f \in \DD'(\Omega)\), \(a \in C^\infty(\Omega)\)
+Произведением обобщённой функции \(f \in \DD'(\Omega)\) и гладкой функции \(a \in C^\infty(\Omega)\) называется обобщённая функция \(af \in \DD'(\Omega)\), действующая по правилу:
 \[
 \langle af,\, \phi \rangle
 :=
-\langle f,\, a\phi \rangle,
+\langle f,\, a\phi \rangle
 \qquad
-a\phi \in C_0^\infty(\Omega).
+\forall \phi \in C_0^\infty(\Omega).
 \]
 }
-Это корректно, линейно и непрерывно. \(f(\phi)\), \(\phi \mapsto a\phi\).
+\noindent Данное определение корректно, а сама операция умножения линейна и непрерывна по \(f\) (что следует из линейности и непрерывности отображения \(\phi \mapsto a\phi\)).
 
 \ex{}{
-\(a \in C^\infty\)
+Пусть \(a \in C^\infty(\mathbb{R})\), тогда для \(\delta\)-функции Дирака и \(\forall \phi \in C_0^\infty(\mathbb{R})\) имеем:
 \[
 \langle a\delta,\, \phi \rangle
 =
 \langle \delta,\, a\phi \rangle
 =
-a(0)\,\phi(0)
+(a\phi)(0)
+=
+a(0)\phi(0)
 =
 a(0)\,\langle \delta,\, \phi \rangle
+=
+\langle a(0)\delta,\, \phi \rangle.
 \]
+Отсюда получаем важное тождество:
 \[
-a(x)\,\delta(x) = a(0)\,\delta(x)
+a(x)\delta(x) = a(0)\delta(x).
 \]
-\[
-f \xrightarrow{A} a \cdot f
-\]
-\(\delta\) --- это обобщённая функция, собственная функция \(A\).
+Если рассмотреть линейный оператор умножения \(A: \DD' \to \DD'\), заданный как \(A f = a \cdot f\), то \(\delta\)-функция является его собственной функцией с собственным значением \(\lambda = a(0)\).
 }
 
 \exr{}{
-\(\eta \in C^\infty(\Omega)\) и \(\eta \equiv 1\) на \(\supp f\),
-\(f \in \DD(\Omega)\). Тогда \(\eta f = f\).
+Пусть \(\eta \in C^\infty(\Omega)\) и \(\eta(x) \equiv 1\) на \(\supp f\), где \(f \in \DD'(\Omega)\). Докажите, что тогда \(\eta f = f\).
 }
 
 \subsubsection{Замена координат}
 \(\Phi\) --- диффеоморфизм \(\Phi \colon \Omega \to \Omega_1\).
-Хотим определить \(f \circ \Phi\) для \(f \in \DD'(\Omega_1)\).
-Рассмотрим \(f \in L_1^{\loc}(\Omega)\):
+
+\begin{center}
+\begin{tikzpicture}[scale=1.05, baseline=(current bounding box.center)]
+  \usetikzlibrary{arrows.meta}
+  
+  % --- ОБЛАСТЬ \Omega (слева) ---
+  \draw[black, thick] (0,0) ellipse (1.45cm and 0.9cm);
+  \node at (0,0.6) {\(\Omega\)};
+  
+  % Прямая сетка внутри \Omega
+  \begin{scope}
+    \clip (0,0) ellipse (1.45cm and 0.9cm);
+    \foreach \x in {-1.2,-0.8,-0.4,0,0.4,0.8,1.2} \draw[gray, opacity=0.25] (\x,-1) -- (\x,1);
+    \foreach \y in {-0.6,-0.3,0,0.3,0.6} \draw[gray, opacity=0.25] (-1.5,\y) -- (1.5,\y);
+  \end{scope}
+  
+  % Точка x
+  \fill[black] (-0.7,-0.2) circle (1.5pt) node[below right, color=black, font=\footnotesize] {\(x\)};
+
+  % --- СТРЕЛКИ МЕЖДУ ОБЛАСТЯМИ ---
+  % Прямое отображение \Phi
+  \draw[-{Stealth}, black, thick] (1.75,0.25) -- (3.45,0.25);
+  \node[above] at (2.6,0.25) {\(\Phi\)};
+  
+  % Обратное отображение \Phi^{-1} (пунктиром)
+  \draw[{Stealth}-, gray, dashed, line width=0.5pt] (1.75,-0.25) -- (3.45,-0.25);
+  \node[below, color=gray] at (2.6,-0.25) {\(\Phi^{-1}\)};
+
+  % --- ОБЛАСТЬ \Omega_1 (справа) ---
+  \draw[black, thick] (5.2,0) ellipse (1.45cm and 0.9cm);
+  \node at (5.2,0.6) {\(\Omega_1\)};
+  
+  % Искаженная сетка внутри \Omega_1 (через кривые Безье)
+  \begin{scope}[shift={(5.2,0)}]
+    \clip (0,0) ellipse (1.45cm and 0.9cm);
+    
+    % Вертикальные кривые линии (плавный изгиб вправо в центре)
+    \foreach \x in {-1.2,-0.8,-0.4,0,0.4,0.8,1.2} {
+      \draw[gray, opacity=0.25] (\x,-1) .. controls (\x+0.15, -0.1) and (\x+0.15, 0.3) .. (\x,1);
+    }
+    
+    % Горизонтальные кривые линии (волнообразный изгиб)
+    \foreach \y in {-0.6,-0.3,0,0.3,0.6} {
+      \draw[gray, opacity=0.25] (-1.5,\y) .. controls (-0.5,\y+0.4) and (0.5,\y-0.2) .. (1.5,\y);
+    }
+  \end{scope}
+  
+  % Точка y = \Phi(x)
+  \fill[black] (4.58,-0.18) circle (1.5pt) node[below right, color=black, font=\footnotesize] {\(y = \Phi(x)\)};
+
+\end{tikzpicture}
+\end{center}
+
+Хотим определить \(f \circ \Phi\) для обобщенной функции \(f \in \DD'(\Omega_1)\). 
+Для мотивировки рассмотрим регулярную функцию \(f \in L_1^{\loc}(\Omega_1)\) и тест-функцию \(\phi \in C_0^\infty(\Omega)\):
 \begin{align*}
-\langle f \circ \Phi,\, \phi \rangle
-&=
-\int f\bigl(\Phi(x)\bigr)\,\phi(x)\,dx \\
-&\stackrel{y=\Phi(x)}{=}
-\int_\Omega f(y)\,
-\frac{\phi(\Phi^{-1}(y))}{|\det\Phi'(y)|}\,dy \\
-&=
+\langle f \circ \Phi,\, \phi \rangle =
+\int_{\Omega} f\bigl(\Phi(x)\bigr)\,\phi(x)\,dx \stackrel{y=\Phi(x)}{=}
+\int_{\Omega_1} f(y)\, \frac{\phi\bigl(\Phi^{-1}(y)\bigr)}{\bigl|\det\Phi'\bigl(\Phi^{-1}(y)\bigr)\bigr|}\,dy =
 \biggl\langle
     f,\,
-    \frac{\phi \circ \Phi^{-1}}{|\det\Phi|}
-\biggr\rangle
-\in \DD'(\Omega_1).
+    \frac{\phi \circ \Phi^{-1}}{\bigl|\det\Phi' \circ \Phi^{-1}\bigr|}
+\biggr\rangle.
 \end{align*}
 
+Опираясь на этот вид, введем общее определение для любых \(f \in \DD'(\Omega_1)\).
+
 \dfn{}{
+Композицией обобщенной функции \(f \in \DD'(\Omega_1)\) с диффеоморфизмом \(\Phi\) называется обобщенная функция \(f \circ \Phi \in \DD'(\Omega)\), действующая по правилу:
 \[
 \langle f \circ \Phi,\, \phi \rangle
 :=
 \biggl\langle
     f,\,
-    \frac{\phi \circ \Phi^{-1}}{|\det\Phi|}
-\biggr\rangle
+    \frac{\phi \circ \Phi^{-1}}{\bigl|\det\Phi' \circ \Phi^{-1}\bigr|}
+\biggr\rangle, \qquad \forall \phi \in C_0^\infty(\Omega).
 \]
+Данное определение корректно, поскольку отображение переводит пространство основных функций в себя:
 \[
 \phi \circ \Phi^{-1} \in C_0^\infty(\Omega_1),
 \qquad
-\frac{1}{|\det\Phi|}.
+\frac{1}{\bigl|\det\Phi' \circ \Phi^{-1}\bigr|} \in C^\infty(\Omega_1).
 \]
 }
-Это определение корректно, линейно и непрерывно
-(композиция непрерывных отображений).
+\noindent Ко всему прочему, определение линейно и непрерывно (как композиция непрерывных линейных отображений).
+
 
 \ex{}{
+Пусть $\Phi(x) = x - x^0$, тогда $\Phi^{-1}(y) = y + x^0$ и $|\det \Phi'| = 1$. По формуле замены координат:
 \[
 \langle \delta(x-x^0),\, \phi \rangle
 =
-\biggl\langle
-    \delta(x),\,
-    \frac{\phi(x+x^0)}{1}
-\biggr\rangle
+\langle \delta(y),\, \phi(y+x^0) \rangle
 =
-\phi(x^0)
+\phi(x^0).
 \]
+Отсюда вытекает свойство умножения на гладкую функцию $a(x)$:
 \[
 a(x) \cdot \delta(x-x^0)
 =
 a(x^0) \cdot \delta(x-x^0).
 \]
-\(\delta(x-x^0)\) --- собственная функция для \(A \colon f \mapsto af\).
+Таким образом, \(\delta(x-x^0)\) --- собственная функция для оператора умножения \(A \colon f \mapsto af\) с собственным значением $a(x^0)$.
 }
 
+
 \ex{}{
-\(\lambda \neq 0\)
-\[
-\langle \delta(\lambda x),\, \phi(x) \rangle
-=
-\biggl\langle
-    \delta(x),\,
-    \frac{\phi\bigl(\tfrac{x}{\lambda}\bigr)}{|\lambda|^n}
-\biggr\rangle
-=
-\frac{\phi(0)}{|\lambda|^n}.
-\]
-\[
-\Phi(x) = \lambda x
-\]
+Рассмотрим операцию растяжения (масштабирования) координат. Пусть $\lambda \neq 0$ и $\Phi(x) = \lambda x$, где $x \in \mathbb{R}^n$. 
+Тогда обратное отображение имеет вид $\Phi^{-1}(y) = \frac{y}{\lambda}$, а матрица производных является диагональной:
 \[
 \Phi'(x)
 =
 \begin{pmatrix}
-\lambda & & \\
+\lambda & & 0 \\
 & \ddots & \\
-& & \lambda
-\end{pmatrix}
+0 & & \lambda
+\end{pmatrix}_{n \times n}
+\Rightarrow
+|\det \Phi'| = |\lambda|^n.
 \]
-Таким образом
+Применяя формулу замены координат для дельта-функции Дирака $\delta(y)$, получаем:
+\[
+\langle \delta(\lambda x),\, \phi(x) \rangle
+=
+\biggl\langle
+    \delta(y),\,
+    \frac{\phi\bigl(\frac{y}{\lambda}\bigr)}{|\lambda|^n}
+\biggr\rangle
+=
+\frac{\phi(0)}{|\lambda|^n}.
+\]
+Таким образом, выполнено операторное равенство:
 \[
 \delta(\lambda x)
 =
-\frac{1}{|\lambda|^n}\,\delta(x),
+\frac{1}{|\lambda|^n}\,\delta(x).
 \]
-то есть \(\delta\) --- положительная однородная функция порядка \(n\).
+}
+\rem{}{
+Это означает, что дельта-функция Дирака в $\mathbb{R}^n$ является однородной функцией порядка $-n$.
 }
 
+
 \ex{}{
-\(U\) --- ортогональная матрица, \(\delta\)-функция инвариантна
-относительно поворотов.
+Пусть $U$ --- ортогональная матрица порядка $n$ ($U^T U = E$), задающая поворот или зеркальное отражение. 
+Тогда для диффеоморфизма $\Phi(x) = Ux$ матрица производных совпадает с самой матрицей $\Phi'(x) = U$, откуда $|\det U| = 1$, а $\Phi^{-1}(y) = U^{-1}y = U^T y$. 
+
+По формуле замены координат получаем:
 \[
-\delta(Ux) = \delta(x)
+\langle \delta(Ux),\, \phi(x) \rangle
+=
+\biggl\langle \delta(y),\, \frac{\phi(U^T y)}{|\det U|} \biggr\rangle
+=
+\langle \delta(y),\, \phi(U^T y) \rangle
+=
+\phi(0).
 \]
+Так как $\phi(0) = \langle \delta(x),\, \phi(x) \rangle$, справедливо операторное равенство:
+\[
+\delta(Ux) = \delta(x),
+\]
+то есть $\delta$-функция инвариантна относительно поворотов.
+
+\textit{Неформальная интуиция:} это свойство геометрически очевидно из классического «физического» представления дельта-функции:
 \[
 \delta(x)
 =
@@ -648,46 +762,51 @@ a(x^0) \cdot \delta(x-x^0).
 }
 
 \exr{}{
-\(a \in C^\infty(\Omega)\), \(f \in \DD'(\Omega)\),
-\(\Phi\) --- диффеоморфизм \(\Omega \to \Omega_1\). Тогда
+Пусть $a \in C^\infty(\Omega_1)$, $f \in \DD'(\Omega_1)$, а $\Phi \colon \Omega \to \Omega_1$ --- диффеоморфизм. Тогда операция умножения на гладкую функцию коммутирует с заменой координат:
 \[
-(af)\bigl(\phi(x)\bigr)
-=
-a\bigl(\phi(x)\bigr)\,f\bigl(\phi(x)\bigr).
+(af) \circ \Phi = (a \circ \Phi) \cdot (f \circ \Phi).
 \]
 }
 
+
 \subsubsection{Дифференцирование}
-\(D^\alpha f\) ---?
-Рассмотрим \(f \in C^1(\Omega)\):
+Зададимся вопросом, как определить обобщенную производную $D^\alpha f$ для произвольной обобщенной функции $f \in \DD'(\Omega)$.
+
+Для мотивировки рассмотрим функции $f \in C^1(\Omega)$ и $\phi \in C_0^\infty(\Omega)$. Проинтегрируем по частям по переменной $x_i$:
 \[
 \langle D_i f,\, \phi \rangle
 =
-\int_\Omega D_i f\,\phi
+\int_\Omega (D_i f(x))\,\phi(x)\,dx
 =
--\int_\Omega f\, D_i\phi
+-\int_\Omega f(x)\,(D_i\phi(x))\,dx
 =
 -\langle f,\, D_i\phi \rangle.
 \]
+Внеинтегральный член $\int_{\partial\Omega} f \phi \, d\sigma$ исчезает, так как функция $\phi$ имеет компактный носитель $\text{supp}\,\phi \subset \Omega$ и строго равна нулю на границе области.
+
+Опираясь на этот результат, распространим операцию дифференцирования на любые обобщенные функции.
 
 \dfn{}{
-\(f \in \DD'(\Omega)\)
+Производной обобщенной функции $f \in \DD'(\Omega)$ по направлению $x_i$ называется обобщенная функция $D_i f \in \DD'(\Omega)$, действующая по правилу:
 \[
 \langle D_i f,\, \phi \rangle
-=
--\langle f,\, D_i\phi \rangle
+:=
+-\langle f,\, D_i\phi \rangle, \qquad \forall \phi \in C_0^\infty(\Omega).
 \]
+Для произвольного мультииндекса $\alpha = (\alpha_1, \dots, \alpha_n)$ обобщенная производная порядка $|\alpha|$ определяется равенством:
 \[
 \langle D^\alpha f,\, \phi \rangle
-=
-(-1)^{|\alpha|}\,
-\langle f,\, D^\alpha\phi \rangle.
+:=
+(-1)^{|\alpha|}\, \langle f,\, D^\alpha\phi \rangle, \qquad \forall \phi \in C_0^\infty(\Omega).
 \]
 }
 
-Определение корректно.
+Данное определение корректно, линейно и непрерывно. Корректность (замкнутость операции) следует из того, что для любой $\phi \in C_0^\infty(\Omega)$ её производная $D^\alpha\phi$ также без ограничений существует и принадлежит пространству основных функций $C_0^\infty(\Omega)$.
 
-\remm{}{Где все функции дифференцируемые!!!}
+\remm{}{
+В пространстве обобщенных функций $\DD'(\Omega)$ любая функция является бесконечно дифференцируемой в обобщенном смысле.
+}
+
 
 
 \exr{}{
@@ -707,6 +826,7 @@ a\bigl(\phi(x)\bigr)\,f\bigl(\phi(x)\bigr).
 \(\operatorname{sing\,supp} D^\alpha f \subset \operatorname{sing\,supp} f\)
 и привести пример, когда нет равенства.
 }
+
 
 \pagebreak
 % =====================================================================
@@ -938,24 +1058,24 @@ C \cdot \max|D\phi| \cdot R.
 Мы доказали, что функционал определён и линеен (линейность очевидна).
 Осталось показать непрерывность.
 
-Пусть \(\varphi_k \to 0\) в \(\DD(\R^n)\). Тогда
+Пусть \(\phi_k \to 0\) в \(\DD(\R^n)\). Тогда
 \[
 \Biggl|
 \Bigl\langle
     \frac{A\bigl(\tfrac{x}{|x|}\bigr)}{|x|^n},\,
-    \varphi_k
+    \phi_k
 \Bigr\rangle
 \Biggr|
 \le
-C \cdot \max|D\varphi_k| \cdot R.
+C \cdot \max|D\phi_k| \cdot R.
 \]
-Из \(\varphi_k \to 0\) следует \(D\varphi_k \to 0\), значит
-\(\max|D\varphi_k| \to 0\), и поэтому
+Из \(\phi_k \to 0\) следует \(D\phi_k \to 0\), значит
+\(\max|D\phi_k| \to 0\), и поэтому
 \[
 \Biggl|
 \Bigl\langle
     \frac{A\bigl(\tfrac{x}{|x|}\bigr)}{|x|^n},\,
-    \varphi_k
+    \phi_k
 \Bigr\rangle
 \Biggr|
 \xrightarrow{k\to\infty} 0.
@@ -3026,7 +3146,8 @@ u=\chi_{[-at,\, at]}(x)
 
 % ---------------------------------------------------------------------
 \subsection{Упражнение \ref{exr:d-not-metric} (Гена)}
-\exr{}{
+\label{ex:1.3:solved}
+\exr*{}{
 Показать, что сходимость в \(\DD(\R)\) не может быть порождена метрикой.}
 
 Ниже доказательство упражнения \ref{exr:d-not-metric} от Гены для \(\Omega=\R\).
@@ -4070,7 +4191,7 @@ L(\eta u)
 X & & X' \\[4pt]
 L_p(\Omega) & & L_{p'}(\Omega) \\
 \cup & & \cap \\
-C_0(\Omega) & & \mathcal{M}(\Omega) \\
+C(\Omega) & & \mathcal{M}(\Omega) \\
 \cup & & \cap \\
 \vdots & & \vdots \\
 \cup & & \cap \\
